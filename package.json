@@ -1,0 +1,12 @@
+{
+  "name": "mikebot",
+  "version": "2.0.0",
+  "description": "Cover all your michael needs, By Michaels, for Michaels",
+  "main": "index.js",
+  "type": "module",
+  "dependencies": {
+    "discord.js": "^14.19.3",
+    "dotenv": "^16.5.0",
+    "nodemon": "^3.1.10"
+  }
+}
