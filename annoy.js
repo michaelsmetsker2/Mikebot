@@ -3,9 +3,11 @@ import fs from 'node:fs/promises';
 export const annoy = async (interaction) => {
   try {
     const message = interaction.options.getString('message');
-    console.log('annoy command received:', message);
+    const sender = interaction.user.tag; // or .username
 
-    fs.writeFile('./tts.txt', message);
+    console.log(sender, 'says:', message);
+
+    await fs.writeFile('./tts.txt', message);
     console.log('file write successful');
 
     await interaction.reply('Message delivered, it has been done!');
