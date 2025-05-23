@@ -7,7 +7,7 @@ export const query = async (interaction) => {
         const sender = interaction.user.tag; // or .username
         const filePath = './responces.txt'
         const outpath = './temp/query.txt'
-        const wavPath = './queryOutput.wav'
+        const wavPath = './temp/queryOutput.wav'
 
         const data = await fs.readFile(filePath, 'utf-8');
         const lines = data.split(/\r?\n/).filter(line => line.trim() !== '');
