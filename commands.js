@@ -12,4 +12,9 @@ const ANNOY_COMMAND = {
     type: 1, // CHAT_INPUT
 };
 
+const QUERY_COMMAND = {
+    name: 'query',
+    description: 'Ask mikebot a question',
+}
+
 export const ALL_COMMANDS = [ANNOY_COMMAND];
