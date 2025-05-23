@@ -5,7 +5,7 @@ export const annoy = async (interaction) => {
     const message = interaction.options.getString('message');
     const sender = interaction.user.tag; // or .username
 
-    if (message.length > 250) {
+    if (message.length > 300) {
       await interaction.reply('fuck you i\'m not listening to all of that');
       return;
     }
