@@ -1,7 +1,7 @@
 // deploy-commands.js
 import 'dotenv/config';
 import { REST, Routes, SlashCommandBuilder } from 'discord.js';
-import { ALL_COMMANDS} from './commands.js';
+import { ALL_COMMANDS} from '../commands.js';
 
 const rest = new REST({ version: '10' }).setToken(process.env.TOKEN);
 
