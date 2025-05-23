@@ -18,4 +18,4 @@ const QUERY_COMMAND = {
     type: 1, // CHAT_INPUT
 }
 
-export const ALL_COMMANDS = [ANNOY_COMMAND];
+export const ALL_COMMANDS = [ANNOY_COMMAND, QUERY_COMMAND];
