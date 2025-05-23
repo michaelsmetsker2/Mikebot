@@ -1,4 +1,5 @@
 .env
 node_modules
 .wav
-temp/
+temp/tts.txt
+temp/query.txt
