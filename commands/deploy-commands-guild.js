@@ -5,7 +5,7 @@ dotenv.config();
 import { REST } from 'discord.js';
 import { Routes } from 'discord.js';
 
-import { ALL_COMMANDS } from '../commands.js';
+import { ALL_COMMANDS } from './commands.js';
 
 const CLIENT_ID = process.env.APP_ID || '1375015828612714556';
 const GUILD_ID = process.env.GUILD_ID || '1375029200582344786';

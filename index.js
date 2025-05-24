@@ -1,8 +1,8 @@
 // index.js
 import { Client, GatewayIntentBits, Events } from 'discord.js';
-import { annoy } from './commands/annoy.js';
+import { annoy } from './commands/annoy/annoy.js';
+import { query } from './commands/query/query.js';
 import 'dotenv/config';
-import { query } from './commands/query.js';
 
 const client = new Client({ 
     intents: [
