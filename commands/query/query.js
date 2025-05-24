@@ -1,11 +1,11 @@
 import fs from 'node:fs/promises';
 import { AttachmentBuilder } from 'discord.js';
-import { sleep } from '../utils.js';
+import { sleep } from '../../utils.js';
 
 export const query = async (interaction) => {
     try {
         const sender = interaction.user.tag; // or .username
-        const filePath = './responces.txt'
+        const filePath = './commands/query/responces.txt'
         const outpath = './temp/query.txt'
         const wavPath = './temp/queryOutput.wav'
 
