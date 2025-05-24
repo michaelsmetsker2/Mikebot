@@ -6,6 +6,7 @@
 import { Client, GatewayIntentBits, Events } from 'discord.js';
 import { annoy } from './commands/annoy/annoy.js';
 import { query } from './commands/query/query.js';
+import { honk } from './commands/honk/honk.js';
 import 'dotenv/config';
 
 const client = new Client({ 
@@ -43,15 +44,17 @@ const processQueue = async () => {
   activeQueue = false;
 }
 
+//client is ready
 client.once(Events.ClientReady, c => {
   console.log(`Logged in as ${c.user.tag}`);
 });
 
+//listen for commands
 client.on(Events.InteractionCreate, async interaction => {
   if (!interaction.isChatInputCommand()) return;
 
   if (interaction.commandName === 'honk') {
-
+    await honk(interaction);
   } else { //must be a tts command then+-
     ttsQueue.push(interaction);
     processQueue();

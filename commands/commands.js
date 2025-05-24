@@ -18,4 +18,10 @@ const QUERY_COMMAND = {
     type: 1, // CHAT_INPUT
 }
 
+const HONK_COMMAND = {
+    name: 'honk',
+    dascription: 'honks a horn, somewhere out there, you\'ll have to trust me',
+    type: 1, //CHAT_UNPUT
+}
+
 export const ALL_COMMANDS = [ANNOY_COMMAND, QUERY_COMMAND];

@@ -16,12 +16,11 @@ export const query = async (interaction) => {
 
         await fs.writeFile(outpath, randomLine, 'utf-8');
 
-
-        await sleep(50);
+        await sleep(150);
 
         const file = new AttachmentBuilder(wavPath);
 
-        await sleep(200);
+        await sleep(400);
         await interaction.reply({
             content: "",
             files: [file]
@@ -32,3 +31,5 @@ export const query = async (interaction) => {
         await interaction.reply('sumthin bad happened');
     }
 };
+
+

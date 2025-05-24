@@ -1,3 +1,5 @@
+//command that plays a string on my pc via tts
+
 import fs from 'node:fs/promises';
 
 export const annoy = async (interaction) => {
