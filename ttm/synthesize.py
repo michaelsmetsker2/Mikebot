@@ -3,6 +3,10 @@ from TTS.api import TTS
 import ffmpeg
 import os
 
+import time
+start_time = time.time()
+
+
 # Get device
 device = "cuda" if torch.cuda.is_available() else "cpu"
 
@@ -14,8 +18,8 @@ tts = TTS(
 
 # Synthesize audio
 tts.tts_to_file(
-    text="Your kinda bein a diddy blud",
-    speaker_wav="./minimike/001.wav",
+    text="volume one, a retrospect chapter onem, in the home of my parents. we are now in the frontier in the state reunion. we are in the younger generation and we will persue this and get employed. german austria must be restored to the great german motherland.",
+    speaker_wav="./datasichael/wavs/001.wav",
     language="en",
     file_path="output_temp.wav"
 )
@@ -32,3 +36,8 @@ tts.tts_to_file(
 os.remove("./output_temp.wav")
 
 print("Fixed audio saved as output_fixed.wav")
+
+end_time = time.time()
+elapsed_time = end_time - start_time
+print(f"Id done took: {elapsed_time:.2f} seconds")
+
