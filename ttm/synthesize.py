@@ -18,7 +18,7 @@ tts = TTS(
 
 # Synthesize audio
 tts.tts_to_file(
-    text="Testing123",
+    text="Testing 123",
     speaker_wav="./datasichael/wavs/001.wav",
     language="en",
     file_path="output_temp.wav"
