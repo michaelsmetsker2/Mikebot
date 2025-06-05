@@ -18,7 +18,7 @@ tts = TTS(
 
 # Synthesize audio
 tts.tts_to_file(
-    text="volume one, a retrospect chapter onem, in the home of my parents. we are now in the frontier in the state reunion. we are in the younger generation and we will persue this and get employed. german austria must be restored to the great german motherland.",
+    text="Testing123",
     speaker_wav="./datasichael/wavs/001.wav",
     language="en",
     file_path="output_temp.wav"
