@@ -21,6 +21,12 @@ const QUERY_COMMAND = {
 const TTM_COMMAND = {
     name: 'ttm',
     description: 'text to michael',
+    options: [{
+        type: 3, //string
+        name: 'text',
+        description: 'text that will to michael',
+        required: true
+    }],
     type: 1, // CHAT_INPUT
 }
 
