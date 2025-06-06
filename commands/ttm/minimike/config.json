@@ -1,5 +1,5 @@
 {
-    "output_path": "/home/Mikebot/ttm/minimike/",
+    "output_path": "/home/minimike/coqui-ai-TTS/recipes/ljspeech/xtts_v2/run/training",
     "logger_uri": null,
     "run_name": "GPT_XTTS_v2.0_LJSpeech_FT",
     "project_name": "XTTS_trainer",
@@ -133,7 +133,7 @@
         "clvp_checkpoint": null,
         "decoder_checkpoint": null,
         "num_chars": 255,
-        "tokenizer_file": "./vocab.json",
+        "tokenizer_file": "/home/minimike/coqui-ai-TTS/recipes/ljspeech/xtts_v2/run/training/XTTS_v2.0_original_model_files/vocab.json",
         "gpt_max_audio_tokens": 605,
         "gpt_max_text_tokens": 402,
         "gpt_max_prompt_tokens": 70,
@@ -163,9 +163,9 @@
         "debug_loading_failures": false,
         "max_wav_length": 255995,
         "max_text_length": 200,
-        "mel_norm_file": "./mel_stats.pth",
-        "dvae_checkpoint": "./dvae.pth",
-        "xtts_checkpoint": "./model.pth",
+        "mel_norm_file": "/home/minimike/coqui-ai-TTS/recipes/ljspeech/xtts_v2/run/training/XTTS_v2.0_original_model_files/mel_stats.pth",
+        "dvae_checkpoint": "/home/minimike/coqui-ai-TTS/recipes/ljspeech/xtts_v2/run/training/XTTS_v2.0_original_model_files/dvae.pth",
+        "xtts_checkpoint": "/home/minimike/coqui-ai-TTS/recipes/ljspeech/xtts_v2/run/training/XTTS_v2.0_original_model_files/model.pth",
         "vocoder": ""
     },
     "model_dir": null,

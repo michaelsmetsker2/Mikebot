@@ -1,3 +1,4 @@
+print("starting synthesize.py")
 import torch
 from TTS.api import TTS
 import ffmpeg
