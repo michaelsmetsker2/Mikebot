@@ -1,5 +1,5 @@
 //command that plays a string on my pc via tts
-
+// TODO: the tts will delete the file after it has been read. use this to see if it was read correctly
 import fs from 'node:fs/promises';
 import { sleep } from '../../utils.js'
 import { TEMP_DIR } from '../../config.js';
@@ -23,7 +23,6 @@ export const annoy = async (interaction) => {
     console.log('file write successful');
 
     await interaction.reply('Message delivered, it has been done!');
-    // TODO delete file after use
   } catch (err) {
     console.error('Error in annoy command:', err);
     await interaction.reply('Error delivering message');
