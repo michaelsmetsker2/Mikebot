@@ -3,6 +3,7 @@
 import fs from 'node:fs/promises';
 import { sleep } from '../../utils.js'
 import { TEMP_DIR } from '../../config.js';
+import path from 'path';
 
 const ttsPath = path.join(TEMP_DIR, 'tts.txt');
 
