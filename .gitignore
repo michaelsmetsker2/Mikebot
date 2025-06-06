@@ -1,6 +1,5 @@
 .env
 node_modules
-temp/
 
 # pth files to large to be stored in git
 *.pth
