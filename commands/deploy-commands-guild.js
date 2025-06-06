@@ -7,8 +7,8 @@ import { Routes } from 'discord.js';
 
 import { ALL_COMMANDS } from './commands.js';
 
-const CLIENT_ID = process.env.APP_ID || '1375015828612714556';
-const GUILD_ID = process.env.GUILD_ID || '1375029200582344786';
+const CLIENT_ID = process.env.APP_ID;;
+const GUILD_ID = process.env.GUILD_ID;
 
 async function deployGuildCommands() {
   const rest = new REST({ version: '10' }).setToken(process.env.TOKEN);
