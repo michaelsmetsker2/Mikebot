@@ -2,8 +2,12 @@
 ## A bot for Michaels from Michaels
 
 
+ffmpeg
+xvfb (if your running headless)
 to install coqui tts dependencies:
 ``pip install TTS``
+
+
 
 ### commands:
 /annoy prints the text to a file that will be read out by a modified willfromafar frontent
