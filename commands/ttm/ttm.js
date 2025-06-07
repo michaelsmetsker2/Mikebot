@@ -24,11 +24,11 @@ export const ttm = async (interaction) => {
             const ttsProcess = spawn('python3', ['synthesize.py', message]);
 
             ttsProcess.stdout.on('data', (data) => {
-                console.log('[python] ${data}');
+                console.log(`[python] ${data}`);
             });
 
             ttsProcess.stderr.on('data', (data) => {
-                console.error('[python error] ${data}');
+                console.error(`[python error] ${data}`);
             });
 
             ttsProcess.on('close', (code) => {
