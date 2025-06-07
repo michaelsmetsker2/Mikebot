@@ -1,7 +1,7 @@
 //ttm (text to michael)
 import path from 'node:path';
 import 'dotenv/config';
-import AttachmentBuilder from 'discord.js';
+import { AttachmentBuilder } from 'discord.js';
 import spawn from 'child_process';
 
 const CHARACTER_LIMIT = 150;
