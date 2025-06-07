@@ -41,5 +41,3 @@ export const query = async (interaction) => {
     
     console.log('query successfully completed\n');
 };
-
-

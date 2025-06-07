@@ -17,7 +17,7 @@ export const ttm = async (interaction) => {
 
     if (message.length > CHARACTER_LIMIT) { //over max character limit
         console.log('message was to long');
-        await interaction.reply('no long stuff please, ' + CHARACTER_LIMIT + ' characters max');
+        await interaction.editReply('no long stuff please, ' + CHARACTER_LIMIT + ' characters max');
         return;
     } else {   
         // Run the python synthesis script

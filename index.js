@@ -1,6 +1,9 @@
 /**
  * @fileoverview
  * Main file of mikebot, handles command activations and initializing the bot
+ * 
+ * TODO see if mikebot is in the server, if not send an ephemeral message,
+ * if it is send it publicly
  */
 
 import { Client, GatewayIntentBits, Events } from 'discord.js';
