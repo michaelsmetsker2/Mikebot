@@ -4,9 +4,9 @@
  */
 
 import { Client, GatewayIntentBits, Events } from 'discord.js';
-import annoy from './commands/annoy/annoy.js';
-import query from './commands/query/query.js';
-import ttm from './commands/ttm/ttm.js';
+import { annoy } from './commands/annoy/annoy.js';
+import { query } from './commands/query/query.js';
+import { ttm } from './commands/ttm/ttm.js';
 import 'dotenv/config';
 
 const client = new Client({ 
