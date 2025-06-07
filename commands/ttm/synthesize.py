@@ -1,4 +1,4 @@
-print("starting synthesize.py")
+print("synthesize.py started")
 import torch
 from TTS.api import TTS
 from dotenv import load_dotenv
@@ -20,26 +20,24 @@ if len(sys.argv) < 2:
     sys.exit(1)
 
 message = sys.argv[1]
-print("received request ", message)
 
 device = "cuda" if torch.cuda.is_available() else "cpu" # Use GPU if available
 start_time = time.time()
 
-print("initializing model")
 tts = TTS(
     model_path = os.path.join(SCRIPT_DIR, "./minimike"),
     config_path = os.path.join(SCRIPT_DIR, "./minimike/config.json")
 ).to(device)
+print("model initialized")
 
-print("synthesizing audio")
 tts.tts_to_file(
     text  =message,
     speaker_wav = os.path.join(SCRIPT_DIR, "./datasichael/wavs/001.wav"),
     language = "en",
     file_path = TEMP_WAV_PATH
 )
+print("audio synthesized")
 
-print("resampling audio")
 (
     ffmpeg
     .input(TEMP_WAV_PATH)
@@ -47,6 +45,7 @@ print("resampling audio")
     .overwrite_output()
     .run(quiet = True) # remove quiet=True for ffmpeg output
 )
+print("audio resampled")
 
 os.remove(TEMP_WAV_PATH) # clean up temp file
 

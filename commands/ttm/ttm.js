@@ -21,6 +21,7 @@ export const ttm = async (interaction) => {
         return;
     } else {   
         // Run the python synthesis script
+        console.log('starting synthesis script')
         await new Promise((resolve, reject) => {
             const ttsProcess = spawn('python3', ['commands/ttm/synthesize.py', message]);
             
