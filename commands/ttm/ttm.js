@@ -1,34 +1,53 @@
 //ttm or text to michael
-
-//import fs from 'node:fs/promises';
 import path from 'node:path';
-//import { fileURLToPath } from 'node:url';
 import { AttachmentBuilder } from 'discord.js';
-
 import { TEMP_DIR } from '../../config.js';
-//import { sleep } from '../../utils.js';
+import { spawn } from 'child_process'
 
-const wavPath = path.join(TEMP_DIR, 'ttm.wav');
+const WAVPATH = path.join(TEMP_DIR, 'ttm.wav');
+const CHARACTER_LIMIT = 150;
 
-export const query = async (interaction) => {
+
+export const ttm = async (interaction) => {
     try {
         const sender = interaction.user.tag; // or .username
         const message = interaction.options.getString('text'); //get message
         console.log("ttm request from: ", sender, ": " , message);
 
+        if (message.length > CHARACTER_LIMIT) { //over max character limit
+            await interaction.reply('no long stuff please, ' + CHARACTER_LIMIT + ' characters max');
+            return;
+        }
+        
         await interaction.deferReply();
+        // Run the python synthesis script
+        await new Promise((resolve, reject) => {
+            const ttsProcess = spawn('python3', ['synthesize.py', message]);
 
+            ttsProcess.stdout.on('data', (data) => {
+                console.log('[python] ${data}');
+            });
 
-        const file = new AttachmentBuilder(wavPath);
+            ttsProcess.stderr.on('data', (data) => {
+                console.error('[python error] ${data}');
+            });
 
-        await interaction.reply({
-            content: "",
+            ttsProcess.on('close', (code) => {
+                if (code === 0) resolve();
+                else reject(new Error('TTS process exited with code ' + code))
+            });
+        });
+
+        const file = new AttachmentBuilder(WAVPATH);
+        await interaction.editReply({
+            content: '',
             files: [file]
-        }) 
+        })
+
         console.log("query success, from: ", sender)
     } catch (error) {
         console.error(error);
-        await interaction.reply('sumthin bad happened');
+        await interaction.editReply('sumthin bad happened');
     }
 };
 

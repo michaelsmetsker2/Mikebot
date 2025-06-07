@@ -3,14 +3,14 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { AttachmentBuilder } from 'discord.js';
 
-import { TEMP_DIR } from '../../config.js';
+import 'dotenv/config';
 import { sleep } from '../../utils.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 const responsesPath = path.join(__dirname, 'responses.txt');
-const outpath = path.join(TEMP_DIR, 'query.txt');
-const wavPath = path.join(TEMP_DIR, 'queryOutput.wav');
+const outpath = path.join(process.env.TEMP_DIR, 'query.txt');
+const wavPath = path.join(process.env.TEMP_DIR, 'queryOutput.wav');
 
 export const query = async (interaction) => {
     try {

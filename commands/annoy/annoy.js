@@ -1,11 +1,11 @@
 //command that plays a string on my pc via tts
 // TODO: the tts will delete the file after it has been read. use this to see if it was read correctly
 import fs from 'node:fs/promises';
-import { sleep } from '../../utils.js'
-import { TEMP_DIR } from '../../config.js';
 import path from 'path';
+import 'dotenv/config';
 
-const ttsPath = path.join(TEMP_DIR, 'tts.txt');
+
+const ttsPath = path.join(process.env.TEMP_DIR, 'tts.txt');
 
 export const annoy = async (interaction) => {
   try {

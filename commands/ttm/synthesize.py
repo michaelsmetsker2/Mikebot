@@ -1,10 +1,17 @@
 print("starting synthesize.py")
 import torch
 from TTS.api import TTS
+from dotenv import load_dotenv
 import ffmpeg
 import os
 import time
 import sys
+
+load_dotenv(dotenv_path="../../.env")
+TEMP_DIR = os.getenv("TEMP_DIR")
+
+TEMP_WAV_PATH = os.path.join(TEMP_DIR, "ttm_temp.wav")
+FINAL_WAV_PATH = os.path.join(TEMP_DIR, "ttm.wav")
 
 if len(sys.argv) < 2:
     print("Usage: python synthesize.py \"message\"")
@@ -27,19 +34,19 @@ tts.tts_to_file(
     text=message,
     speaker_wav="./datasichael/wavs/001.wav",
     language="en",
-    file_path="output_temp.wav"
+    file_path=TEMP_WAV_PATH
 )
 
 print("resampling audio")
 (
     ffmpeg
-    .input('output_temp.wav')
-    .output('output.wav', af='asetrate=24000,aresample=24000', ar='24000')
+    .input(TEMP_WAV_PATH)
+    .output(FINAL_WAV_PATH, af='asetrate=24000,aresample=24000', ar='24000')
     .overwrite_output()
     .run(quiet=True) # remove quiet=True for ffmpeg output
 )
 
-os.remove("./output_temp.wav") # clean up temp file
+os.remove(TEMP_WAV_PATH) # clean up temp file
 
 end_time = time.time()
 elapsed_time = end_time - start_time
