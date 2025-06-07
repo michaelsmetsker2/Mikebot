@@ -25,21 +25,19 @@ export const query = async (interaction) => {
 
     
     //gives ample time for the external TTS engine to process the file and writ the output
-    await sleep(150);
+    await sleep(450);
     
     //replies with file written by tts engine
     const file = new AttachmentBuilder(WAV_PATH);
-    
-    await sleep(300);
-    
-    //delete temp files
-    await fs.unlink(QUERY_PATH);
-    await fs.unlink(WAV_PATH);
     
     await interaction.editReply({
         content: '',
         files: [file]
     })
+
+    //delete temp files
+    await fs.unlink(QUERY_PATH);
+    await fs.unlink(WAV_PATH);
     
     console.log('query successfully completed');
 };
