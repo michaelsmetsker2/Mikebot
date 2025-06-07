@@ -2,7 +2,7 @@
 import path from 'node:path';
 import 'dotenv/config';
 import { AttachmentBuilder } from 'discord.js';
-import spawn from 'child_process';
+import { spawn } from 'child_process';
 
 const CHARACTER_LIMIT = 150;
 
