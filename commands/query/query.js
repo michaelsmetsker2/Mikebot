@@ -13,7 +13,7 @@ const QUERY_PATH = path.join(process.env.TEMP_DIR, 'query.txt'); // Text file to
 const WAV_PATH = path.join(process.env.TEMP_DIR, 'queryOutput.wav'); // File output from external TTS engine.
 
 export const query = async (interaction) => {
-    
+
     const sender = interaction.user.tag; // or .username
     console.log('processing query from: ', sender);
 
@@ -25,10 +25,12 @@ export const query = async (interaction) => {
 
     
     //gives ample time for the external TTS engine to process the file and writ the output
-    await sleep(450);
-
+    await sleep(150);
+    
     //replies with file written by tts engine
     const file = new AttachmentBuilder(WAV_PATH);
+    
+    await sleep(300);
     
     //delete temp files
     await fs.unlink(QUERY_PATH);
