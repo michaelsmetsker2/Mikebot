@@ -4,26 +4,26 @@ import fs from 'node:fs/promises';
 import path from 'path';
 import 'dotenv/config';
 
+const CHARACTER_LIMIT = 250; // Max characters for the message
+
+// Text file that will be read by an external TTS system on the client machine
+// Generally the temp directory should by in a shared location
 const ttsPath = path.join(process.env.TEMP_DIR, 'tts.txt');
 
 export const annoy = async (interaction) => {
-  try {
-    const message = interaction.options.getString('message');
-    const sender = interaction.user.tag; // or .username
+  const message = interaction.options.getString('message'); // Message attatched to the command
+  console.log(sender, 'attempts to annoy you with: ', message);
 
-    if (message.length > 250) {
-      await interaction.reply('fuck you i\'m not listening to all of that');
-      return;
-    }
+  const sender = interaction.user.tag; // or .username
 
-    console.log(sender, 'says:', message);
-
-    await fs.writeFile(ttsPath, message);
-    console.log('file write successful');
-
-    await interaction.reply('Message delivered, it has been done!');
-  } catch (err) {
-    console.error('Error in annoy command:', err);
-    await interaction.reply('Error delivering message');
+  if (message.length > CHARACTER_LIMIT) { // Invalid message
+    console.log(sender, '\'s message was to long');
+    await interaction.editReply('fuck you i\'m not listening to all of that, (over ', CHARACTER_LIMIT, ' characters)');
+    return;
+  } else { // Valid message
+ 
+    await fs.writeFile(ttsPath, message); //write to file
+    console.log('Annoy message parsed and written to file.');
+    await interaction.editReply('Message delivered, it has been done!'); // Todo: check if file has been deleted
   }
 };
