@@ -1,9 +1,9 @@
 //locally deploy commands for testing
-import dotenv from 'dotenv';
-dotenv.config({ path: '../.env' });
 
 import { REST } from 'discord.js';
 import { Routes } from 'discord.js';
+
+dotenv.config({ path: '../.env' });
 
 import { ALL_COMMANDS } from './commands.js';
 

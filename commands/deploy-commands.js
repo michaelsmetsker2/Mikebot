@@ -2,7 +2,6 @@
 import { REST, Routes, SlashCommandBuilder } from 'discord.js';
 import { ALL_COMMANDS } from './commands.js';
 
-import 'dotenv/config';
 dotenv.config({ path: '../.env' });
 
 const rest = new REST({ version: '10' }).setToken(process.env.TOKEN);
