@@ -3,6 +3,7 @@
 import { REST } from 'discord.js';
 import { Routes } from 'discord.js';
 
+import dotenv from 'dotenv';
 dotenv.config({ path: '../.env' });
 
 import { ALL_COMMANDS } from './commands.js';
