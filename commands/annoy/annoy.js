@@ -4,7 +4,6 @@ import fs from 'node:fs/promises';
 import path from 'path';
 import 'dotenv/config';
 
-
 const ttsPath = path.join(process.env.TEMP_DIR, 'tts.txt');
 
 export const annoy = async (interaction) => {

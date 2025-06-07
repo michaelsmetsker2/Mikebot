@@ -1,12 +1,11 @@
 //ttm or text to michael
 import path from 'node:path';
+import 'dotenv/config';
 import { AttachmentBuilder } from 'discord.js';
-import { TEMP_DIR } from '../../config.js';
 import { spawn } from 'child_process'
 
-const WAVPATH = path.join(TEMP_DIR, 'ttm.wav');
+const WAVPATH = path.join(process.env.TEMP_DIR, 'ttm.wav');
 const CHARACTER_LIMIT = 150;
-
 
 export const ttm = async (interaction) => {
     try {
