@@ -39,7 +39,7 @@ export const query = async (interaction) => {
     await fs.unlink(QUERY_PATH);
     await fs.unlink(WAV_PATH);
     
-    console.log('query successfully completed');
+    console.log('query successfully completed\n');
 };
 
 
