@@ -27,14 +27,14 @@ start_time = time.time()
 
 print("initializing model")
 tts = TTS(
-    model_path = os.path.join(TEMP_DIR, "./minimike"),
-    config_path = os.path.join(TEMP_DIR, "./minimike/config.json")
+    model_path = os.path.join(SCRIPT_DIR, "./minimike"),
+    config_path = os.path.join(SCRIPT_DIR, "./minimike/config.json")
 ).to(device)
 
 print("synthesizing audio")
 tts.tts_to_file(
     text  =message,
-    speaker_wav="./datasichael/wavs/001.wav",
+    speaker_wav = os.path.join(SCRIPT_DIR, "./datasichael/wavs/001.wav"),
     language = "en",
     file_path = TEMP_WAV_PATH
 )
