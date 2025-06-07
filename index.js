@@ -7,6 +7,7 @@ import { Client, GatewayIntentBits, Events } from 'discord.js';
 import { annoy } from './commands/annoy/annoy.js';
 import { query } from './commands/query/query.js';
 import { honk } from './commands/honk/honk.js';
+import { ttm } from './commands/ttm/ttm.js';
 import 'dotenv/config';
 
 const client = new Client({ 
@@ -32,6 +33,9 @@ const processQueue = async () => {
       }
       else if (interaction.commandName === 'query') {
         await query(interaction);
+      }
+      else if (interaction.commandName === 'ttm') {
+        await ttm(interaction);
       }
     }
     catch (error) {
