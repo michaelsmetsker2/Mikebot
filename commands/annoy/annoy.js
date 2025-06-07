@@ -12,9 +12,9 @@ const ttsPath = path.join(process.env.TEMP_DIR, 'tts.txt');
 
 export const annoy = async (interaction) => {
   const message = interaction.options.getString('message'); // Message attatched to the command
-  console.log(sender, 'attempts to annoy you with: ', message);
-
   const sender = interaction.user.tag; // or .username
+  
+  console.log(sender, 'attempts to annoy you with: ', message);
 
   if (message.length > CHARACTER_LIMIT) { // Invalid message
     console.log(sender, '\'s message was to long');

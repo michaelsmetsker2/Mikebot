@@ -13,38 +13,33 @@ const QUERY_PATH = path.join(process.env.TEMP_DIR, 'query.txt'); // Text file to
 const WAV_PATH = path.join(process.env.TEMP_DIR, 'queryOutput.wav'); // File output from external TTS engine.
 
 export const query = async (interaction) => {
-    try {
-        const sender = interaction.user.tag; // or .username
-        console.log('processing query from: ', sender);
+    
+    const sender = interaction.user.tag; // or .username
+    console.log('processing query from: ', sender);
 
-        const data = await fs.readFile(RESPONSES_PATH, 'utf-8');
-        const lines = data.split(/\r?\n/).filter(line => line.trim() !== ''); // Split the file int lines
-        const randomLine = lines[Math.floor(Math.random() * lines.length)]; // Pick a random line
+    const data = await fs.readFile(RESPONSES_PATH, 'utf-8');
+    const lines = data.split(/\r?\n/).filter(line => line.trim() !== ''); // Split the file int lines
+    const randomLine = lines[Math.floor(Math.random() * lines.length)]; // Pick a random line
 
-        await fs.writeFile(QUERY_PATH, randomLine, 'utf-8'); // Write random line to output file
+    await fs.writeFile(QUERY_PATH, randomLine, 'utf-8'); // Write random line to output file
 
-        
-        //gives ample time for the external TTS engine to process the file and writ the output
-        await sleep(450);
+    
+    //gives ample time for the external TTS engine to process the file and writ the output
+    await sleep(450);
 
-        //replies with file written by tts engine
-        const file = new AttachmentBuilder(WAV_PATH);
-        
-        //delete temp files
-        await fs.unlink(QUERY_PATH);
-        await fs.unlink(WAV_PATH);
-        
-        await interaction.editReply({
-            content: '',
-            files: [file]
-        })
-        
-        console.log('query successfully completed');
-
-    } catch (error) {
-        console.error(error);
-        await interaction.editReply('sumthin bad happened');
-    }
+    //replies with file written by tts engine
+    const file = new AttachmentBuilder(WAV_PATH);
+    
+    //delete temp files
+    await fs.unlink(QUERY_PATH);
+    await fs.unlink(WAV_PATH);
+    
+    await interaction.editReply({
+        content: '',
+        files: [file]
+    })
+    
+    console.log('query successfully completed');
 };
 
 
