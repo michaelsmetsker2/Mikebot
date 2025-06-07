@@ -49,5 +49,3 @@ export const ttm = async (interaction) => {
         await interaction.editReply('sumthin bad happened');
     }
 };
-
-

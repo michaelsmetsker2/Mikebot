@@ -7,7 +7,9 @@ import os
 import time
 import sys
 
-load_dotenv(dotenv_path="../../.env")
+SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
+
+load_dotenv(dotenv_path = os.path.join("../../.env"))
 TEMP_DIR = os.getenv("TEMP_DIR")
 
 TEMP_WAV_PATH = os.path.join(TEMP_DIR, "ttm_temp.wav")
@@ -25,16 +27,16 @@ start_time = time.time()
 
 print("initializing model")
 tts = TTS(
-    model_path="./minimike",
-    config_path="./minimike/config.json"
+    model_path = os.path.join(TEMP_DIR, "./minimike"),
+    config_path = os.path.join(TEMP_DIR, "./minimike/config.json")
 ).to(device)
 
 print("synthesizing audio")
 tts.tts_to_file(
-    text=message,
+    text  =message,
     speaker_wav="./datasichael/wavs/001.wav",
-    language="en",
-    file_path=TEMP_WAV_PATH
+    language = "en",
+    file_path = TEMP_WAV_PATH
 )
 
 print("resampling audio")
@@ -43,7 +45,7 @@ print("resampling audio")
     .input(TEMP_WAV_PATH)
     .output(FINAL_WAV_PATH, af='asetrate=24000,aresample=24000', ar='24000')
     .overwrite_output()
-    .run(quiet=True) # remove quiet=True for ffmpeg output
+    .run(quiet = True) # remove quiet=True for ffmpeg output
 )
 
 os.remove(TEMP_WAV_PATH) # clean up temp file
