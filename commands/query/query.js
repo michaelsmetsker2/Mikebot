@@ -2,7 +2,7 @@ import fs from 'node:fs/promises';
 import path from 'node:path';
 import fileURLToPath from 'node:url';
 import AttachmentBuilder from 'discord.js';
-import sleep from '../../utils.js';
+import { sleep } from '../../utils.js';
 
 import 'dotenv/config';
 
