@@ -58,7 +58,7 @@ client.on(Events.InteractionCreate, async interaction => {
   if (!interaction.isChatInputCommand()) return;
 
   //defer reply to prevent timeout (for 15 minutes)
-  interaction.deferReply();
+  await interaction.deferReply();
   
   console.log('Registered command: ', interaction.commandName, ' from ', interaction.user.tag);
 
