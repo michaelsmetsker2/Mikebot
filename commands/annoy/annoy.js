@@ -23,7 +23,9 @@ export const annoy = async (interaction) => {
   } else { // Valid message
  
     await fs.writeFile(ttsPath, message); //write to file
+    await interaction.editReply('Message delivered, it has been done!'); // Todo: check if file has been deleted
+    
     console.log('Annoy message parsed and written to file.');
-    await interaction.editReply('Message delivered, it has been done!\n'); // Todo: check if file has been deleted
+    console.log(); // blank linke in between commands
   }
 };
