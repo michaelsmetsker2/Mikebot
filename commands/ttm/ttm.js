@@ -3,7 +3,7 @@ import path from 'node:path';
 import 'dotenv/config';
 import { AttachmentBuilder } from 'discord.js';
 import { spawn } from 'node:child_process';
-import { archiveWav } from '../../utils';
+import { archiveWav } from '../../utils.js';
 
 const CHARACTER_LIMIT = 150;
 
