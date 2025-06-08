@@ -1,20 +1,22 @@
-import fs from 'fs';
+import fs from 'fs/promises';
+import path from 'path';
+import 'dotenv/config';
 
 export const sleep = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 
 /**
- * Asynchronousely checks if a file is locked
- * @param {string} filePath - Full filepath to file
- * @returns {Promise<boolean>} - true if file is locked, false otherwise
-*/
-export const isFileLocked = async (filePath) => {
+ * Moves a WAV file to the archive folder and renames it to the date and time
+ * @param {string} filePath - full filepath to wave file
+ */
+export const archiveWav = async (wavPath) => {
     try {
-        console.log('checking: ', filePath);
-        const file = fs.openSync(filePath, 'r+');
-        fs.closeSync(fd); // If successful, close it immediately
-        return false; //file not locked
-    }
-    catch {
-        return true;   //file locked
+        const now = new Date();
+        const timestamp = now.toISOString().replace(/[:.]/g, '-');
+        const fileName = `${timestamp}.wav`
+
+        await fs.rename(wavPath, path.join(process.env.ARCHIVE_DIR, fileName));
+
+    } catch (error) {
+        console.error('Error archiving wav file:', error);
     }
 }

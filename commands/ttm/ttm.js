@@ -3,6 +3,7 @@ import path from 'node:path';
 import 'dotenv/config';
 import { AttachmentBuilder } from 'discord.js';
 import { spawn } from 'node:child_process';
+import { archiveWav } from '../../utils';
 
 const CHARACTER_LIMIT = 150;
 
@@ -50,6 +51,9 @@ export const ttm = async (interaction) => {
         content: '',
         files: [file]
     })
+
+    // archive the wave file
+    archiveWav(WAVPATH);
 
     console.log('ttm successfully completed');
 };
