@@ -1,7 +1,7 @@
 ## Mikebot
-
 A discord bot for Michaels from Michaels
 
+i cant imagine anyone else practically getting this project to work in full, it is pretty geasred toward my specific circumstances, however i beleive that some parts of it are cool and/or i am proud of them therefore i am sharing it.
 
 ## Commands
 - /annoy [message] prints the text to a file that will be read out by a modified willfromafar frontent
