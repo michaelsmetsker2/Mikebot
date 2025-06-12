@@ -4,8 +4,6 @@ import {defineConfig} from 'vite';
 export default defineConfig({
   envDir: '../',
   server: {
-    port: 3000,
-    allowedHosts: ['dontshootthemetskinger.quest'],
     proxy: {
       '/api': {
         target: 'http://localhost:3001',
