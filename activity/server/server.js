@@ -1,37 +1,65 @@
-import express from "express";
-import dotenv from "dotenv";
-import fetch from "node-fetch";
-dotenv.config({ path: "../.env" });
+import { DiscordSDK } from "@discord/embedded-app-sdk";
 
-const app = express();
-const port = 3001;
+import rocketLogo from '/rocket.png';
+import "./style.css";
 
-// Allow express to parse JSON bodies
-app.use(express.json());
+// Will eventually store the authenticated user's access_token
+let auth;
 
-app.post("/api/token", async (req, res) => {
-  
-  // Exchange the code for an access_token
-  const response = await fetch(`https://discord.com/api/oauth2/token`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/x-www-form-urlencoded",
-    },
-    body: new URLSearchParams({
-      client_id: process.env.VITE_DISCORD_CLIENT_ID,
-      client_secret: process.env.DISCORD_CLIENT_SECRET,
-      grant_type: "authorization_code",
-      code: req.body.code,
-    }),
+const discordSdk = new DiscordSDK(import.meta.env.VITE_DISCORD_CLIENT_ID);
+
+setupDiscordSdk().then(() => {
+  console.log("Discord SDK is authenticated");
+
+  // We can now make API calls within the scopes we requested in setupDiscordSDK()
+  // Note: the access_token returned is a sensitive secret and should be treated as such
+});
+
+async function setupDiscordSdk() {
+  await discordSdk.ready();
+  console.log("Discord SDK is ready");
+
+  // Authorize with Discord Client
+  const { code } = await discordSdk.commands.authorize({
+    client_id: import.meta.env.VITE_DISCORD_CLIENT_ID,
+    response_type: "code",
+    state: "",
+    prompt: "none",
+    scope: [
+      "identify",
+      "guilds",
+      "applications.commands"
+    ],
   });
 
-  // Retrieve the access_token from the response
+  // Retrieve an access_token from your activity's server
+  // Note: We need to prefix our backend `/api/token` route with `/.proxy` to stay compliant with the CSP.
+  // Read more about constructing a full URL and using external resources at
+  // https://discord.com/developers/docs/activities/development-guides/networking#construct-a-full-url
+  const response = await fetch("/.proxy/api/token", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      code,
+    }),
+  });
   const { access_token } = await response.json();
 
-  // Return the access_token to our client as { access_token: "..."}
-  res.send({access_token});
-});
+  // Authenticate with Discord client (using the access_token)
+  auth = await discordSdk.commands.authenticate({
+    access_token,
+  });
 
-app.listen(port, () => {
-  console.log(`Server listening at http://localhost:${port}`);
-});
+  if (auth == null) {
+    throw new Error("Authenticate command failed");
+  }
+}
+
+document.querySelector('#app').innerHTML = `
+  <div>
+    <img src="${rocketLogo}" class="logo" alt="Discord" />
+    <h1>Hello, World!</h1>
+  </div>
+`;
