@@ -81,7 +81,8 @@ client.on(Events.MessageCreate, async message => {
       message.mentions.has(client.user, { ignoreEveryone: true, ignoreRoles: true }) && //checks for exclusive mention
       message.content.toLowerCase().includes("is this real")
     ) {
-      await message.reply("Yes, this is real!");
+      await message.deferReply();
+      await query(message);
     }
   }
   catch (error) {
