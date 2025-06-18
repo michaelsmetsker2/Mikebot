@@ -80,7 +80,7 @@ client.on(Events.MessageCreate, async message => {
       if (message.mentions.roles.size > 0) return; // skips role mentions
 
       if (message.mentions.has(client.user)) {
-        await message.react('💀')
+        console.log("tagged!")
       }
   }
   catch (error) {
