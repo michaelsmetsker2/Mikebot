@@ -86,7 +86,7 @@ client.on(Events.MessageCreate, async message => {
     }
   }
   catch (error) {
-    console.error("Error handling a mention");
+    console.error("Error handling a mention", error);
   }
 })
 
