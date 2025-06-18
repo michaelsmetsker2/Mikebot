@@ -78,8 +78,8 @@ client.on(Events.MessageCreate, async message => {
 
   try { //listen for tags
     if (
-      message.mentions.has(client.user, { ignoreEveryone: true, ignoreRoles: true }) && //checks for exclusive mention
-      message.content.toLowerCase().includes("is this real")
+      message.mentions.has(client.user, { ignoreEveryone: true, ignoreRoles: true }) && // Checks for exclusive mention
+      /is this (real|true)/i.test(message.content)
     ) {
       await query(message);
     }
