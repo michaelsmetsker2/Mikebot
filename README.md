@@ -3,6 +3,8 @@ A discord bot for Michaels from Michaels
 
 i cant imagine anyone else practically getting this project to work in full, it is pretty geasred toward my specific circumstances, however i beleive that some parts of it are cool and/or i am proud of them therefore i am sharing it.
 
+currently the activity stuff is all defunct
+
 ## Commands
 - /annoy [message] prints the text to a file that will be read out by a modified willfromafar frontent
 - /query is an 8ball that sends a wav file of your tts answer (all responses are stored in responses.txt)
@@ -19,7 +21,12 @@ tested with python 3.12 on linux
 cit clone https://github.com/michaelsmetsker2/Mikebot.git
 sudo apt install ffmpeg
 pip install TTS
+
+cd ./Mikebot/bot
+npm install discord.js
 ```
+
+todo: add an example env
 add a .env file in the main directory and include the following
 TOKEN=\<yourDiscordBotToken>
 APP_ID=\<yourDiscordAppId>
