@@ -6,7 +6,7 @@
  * if it is send it publicly
  */
 
-import { Client, GatewayIntentBits, Events } from 'discord.js';
+import { Client, GatewayIntentBits, Events, Emoji } from 'discord.js';
 import { annoy } from './commands/annoy/annoy.js';
 import { query } from './commands/query/query.js';
 import { ttm } from './commands/ttm/ttm.js';
@@ -70,5 +70,22 @@ client.on(Events.InteractionCreate, async interaction => {
   processQueue();
 
 });
+
+// A message is sent in a guild
+client.on(Events.MessageCreate, async message => {
+
+  try { //listen for tags
+      if (message.author.bot) return;
+      if (message.mentions.everyone) return; // skip @everyone and @here
+      if (message.mentions.roles.size > 0) return; // skips role mentions
+
+      if (message.mentions.has(client.user)) {
+        await message.react('💀')
+      }
+  }
+  catch (error) {
+    console.error("Error handling a mention");
+  }
+})
 
 client.login(process.env.TOKEN);
