@@ -14,9 +14,9 @@ import 'dotenv/config';
 
 const client = new Client({ 
     intents: [
-        GatewayIntentBits.Guilds,
+        GatewayIntentBits.Guilds, // lets the bot join servers
         GatewayIntentBits.GuildMessages,
-        GatewayIntentBits.MessageContent, //lets the bot join servers
+        GatewayIntentBits.MessageContent, // lets the bot parse contents of messages 
     ]
 });
 
@@ -73,10 +73,10 @@ client.on(Events.InteractionCreate, async interaction => {
 
 });
 
-// A message is sent in a guild
+// Listen for messages tagging the bot
 client.on(Events.MessageCreate, async message => {
 
-  try { //listen for tags
+  try {
     if (
       message.mentions.has(client.user, { ignoreEveryone: true, ignoreRoles: true }) && // Checks for exclusive mention
       /is this (real|true)/i.test(message.content)

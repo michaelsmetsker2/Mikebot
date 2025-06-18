@@ -56,4 +56,5 @@ export const ttm = async (interaction) => {
     archiveWav(WAVPATH);
 
     console.log('ttm successfully completed');
+    console.log(); // blank linke in between commands
 };
