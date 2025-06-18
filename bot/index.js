@@ -14,7 +14,9 @@ import 'dotenv/config';
 
 const client = new Client({ 
     intents: [
-        GatewayIntentBits.Guilds //lets the bot join servers
+        GatewayIntentBits.Guilds,
+        GatewayIntentBits.GuildMessages,
+        GatewayIntentBits.MessageContent, //lets the bot join servers
     ]
 });
 
