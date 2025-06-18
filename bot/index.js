@@ -77,13 +77,12 @@ client.on(Events.InteractionCreate, async interaction => {
 client.on(Events.MessageCreate, async message => {
 
   try { //listen for tags
-      if (message.author.bot) return;
-      if (message.mentions.everyone) return; // skip @everyone and @here
-      if (message.mentions.roles.size > 0) return; // skips role mentions
-
-      if (message.mentions.has(client.user)) {
-        console.log("tagged!")
-      }
+    if (
+      message.mentions.has(client.user, { ignoreEveryone: true, ignoreRoles: true }) && //checks for exclusive mention
+      message.content.toLowerCase().includes("is this real")
+    ) {
+      await message.reply("Yes, this is real!");
+    }
   }
   catch (error) {
     console.error("Error handling a mention");
