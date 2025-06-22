@@ -6,7 +6,6 @@
  * It will respond with a wav file of tts reading out a random line from the responses text file
  */
 
-
 import fs from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';

@@ -1,5 +1,9 @@
-//command that plays a string on my pc via tts
-// TODO: the tts will delete the file after it has been read. use this to see if it was read correctly
+/**
+ * @fileoverview
+ * command that plays a string on my pc via tts
+ * 
+ * TODO: the tts will delete the file after it has been read. use this to see if it was read correctly
+*/
 import fs from 'node:fs/promises';
 import path from 'path';
 import 'dotenv/config';

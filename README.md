@@ -1,18 +1,15 @@
 ## Mikebot
 A discord bot for Michaels from Michaels
 
-i cant imagine anyone else practically getting this project to work in full, it is pretty geasred toward my specific circumstances, however i beleive that some parts of it are cool and/or i am proud of them therefore i am sharing it.
+i cant imagine anyone else practically getting this project to work in full, it is geared toward my specific setup, however i beleive that some parts of it are cool and/or i am proud of them therefore i am sharing it. All the file paths would need to changed.
 
 currently the activity stuff is all defunct
 
 ## Commands
-- /annoy [message] prints the text to a file that will be read out by a modified willfromafar frontent
+- /annoy [message] prints the text to a file that will be read out by a modified willfromafar frontend and played from my speaker
 - /query is an 8ball that sends a wav file of your tts answer (all responses are stored in responses.txt)
-- /ttm [message] Respons to the message with a wav file of my voice with ai text to speech
-
-ffmpeg
-xvfb (if your running headless)
-to install coqui tts dependencies:
+    this will aslso trigger from @ mentioning the bot
+- /ttm [message] Responds to the message with a wav file of my voice with ai text to speech
 
 ## Installation
 tested with python 3.12 on linux
@@ -25,22 +22,16 @@ pip install TTS
 cd ./Mikebot/bot
 npm install discord.js
 ```
-
-todo: add an example env
 add a .env file in the main directory and include the following
-TOKEN=\<yourDiscordBotToken>
-APP_ID=\<yourDiscordAppId>
-TEMP_DIR=\<fullFilePathToATempDirectory>
-ARCHIVE_DIR=\<fullFilePathToADirectoryToStoreTTSRecords>
 
 for the query and annoy commands to work, a seperate external tts engine must look in the
 temp folder for file updates, tts.txt for /annoy and query.txt for /query
-then for /query it must put a wav file called queryOutput.wav in the same temp directory
+then for /query it will put a wav file called queryOutput.wav in the same temp directory
 all file names are configurable in the applicable command js file.
 
 for this i use a modified vesion of [WillfromAfar reupload](https://archive.org/details/willfromafar-repack)
 the modified exe is included as MicapelaFrontend but dlls and other required files must be downloaded from the link. To update file paths use a program like dnspy to edit the exe, functions i added are in AcapelaGroup.PronuniationEditor/PEWindow.
-    Note: I could not get this program to run on wine. 
+    Note: I could not get this program to run on so i use a seperate windows vm. (it prolly can im just dumb)
 
 Also included is the raw wav files used to train the voice model, the transcript csv for, and the training script for ttm. 
 The model itself is not included as the filesize is to large, but i can distribute it on request.
