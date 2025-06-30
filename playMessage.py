@@ -7,14 +7,15 @@ import subprocess
 FOLDER = "/mnt/pve/media/mikebot/temp"
 FILENAME = "annoy.wav"
 
-print(f"Polling {FOLDER} for {FILENAME}... Press Ctrl+C to stop.")
+print(f"Waiting for {FILENAME} in {FOLDER}")
 
 while True:
     path = os.path.join(FOLDER, FILENAME)
     if os.path.isfile(path):
         print(f"Found {path}, playing...")
-        subprocess.run(["ffplay", "-nodisp", "-autoexit", path])
-        try:
+        subprocess.run(["ffplay", "-nodisp", "-autoexit", path]) #plays wav file with ffmpeg
+
+        try: #delete the file
             os.remove(path)
             print(f"Deleted {path}")
         except Exception as e:
