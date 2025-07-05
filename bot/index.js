@@ -7,7 +7,7 @@
  */
 
 import { Client, GatewayIntentBits, Events, Emoji } from 'discord.js';
-import { annoy } from './commands/annoy/annoy.js';
+import { annoy, annoyFile } from './commands/annoy/annoy.js';
 import { query } from './commands/query/query.js';
 import { ttm } from './commands/ttm/ttm.js';
 import 'dotenv/config';
@@ -73,17 +73,24 @@ client.on(Events.InteractionCreate, async interaction => {
 
 });
 
-// Listen for messages tagging the bot
+// Checks all messages in channels the bot has access to (unfortunately)
 client.on(Events.MessageCreate, async message => {
+  
+  // Parse Dm for valid audio file
+  try{
+    if (message.channel.type == 1 && message.attachments.size > 0) {
+      await annoyFile(message);
+    }
+  } catch (error) {
+    console.error("Error handling Direct Message", error);
+  }
 
+  // Listen for messages tagging the bot
   try {
-    if (
-      message.mentions.has(client.user, { ignoreEveryone: true, ignoreRoles: true })// Checks for exclusive mention
-    ) {
+    if (message.mentions.has(client.user, { ignoreEveryone: true, ignoreRoles: true })) { // Checks for exclusive mention
       await query(message);
     }
-  }
-  catch (error) {
+  } catch (error) {
     console.error("Error handling a mention", error);
   }
 })

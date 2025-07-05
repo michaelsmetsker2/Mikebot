@@ -15,6 +15,8 @@ while True:
         print(f"Found {path}, playing...")
         subprocess.run(["ffplay", "-nodisp", "-autoexit", path]) #plays wav file with ffmpeg
 
+        time.sleep(3) # TODO: make this wait long enough for the file lock to actually be gone
+
         try: #delete the file
             os.remove(path)
             print(f"Deleted {path}")
