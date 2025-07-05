@@ -78,6 +78,8 @@ client.on(Events.MessageCreate, async message => {
   
   // Parse Dm for valid audio file
   try{
+
+    console.log('dm received');
     if (message.channel.type == 1 && message.attachments.size > 0) {
       await annoyFile(message);
     }
