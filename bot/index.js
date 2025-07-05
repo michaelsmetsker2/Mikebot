@@ -17,6 +17,7 @@ const client = new Client({
         GatewayIntentBits.Guilds, // lets the bot join servers
         GatewayIntentBits.GuildMessages,
         GatewayIntentBits.MessageContent, // lets the bot parse contents of messages 
+        GatewayIntentBits.DirectMessages
     ]
 });
 
