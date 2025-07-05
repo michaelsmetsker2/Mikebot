@@ -19,10 +19,7 @@ const client = new Client({
         GatewayIntentBits.MessageContent, // lets the bot parse contents of messages 
         GatewayIntentBits.DirectMessages
     ],
-    partials: [
-      Partials.Channel,
-      Partials.Message
-    ]
+    partials: ['CHANNEL', 'MESSAGE', 'USER'],
 });
 
 const commandQueue = []; //queue of tts command calls so that they dont run at the same time
