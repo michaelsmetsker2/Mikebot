@@ -78,7 +78,13 @@ client.on(Events.InteractionCreate, async interaction => {
 // Checks all messages in channels the bot has access to (unfortunately)
 client.on(Events.MessageCreate, async message => {
   
-  
+      if (message.channel.type === ChannelType.DM) {
+      // Fetch partial message data if partial
+      if (message.partial) {
+        await message.fetch();
+      }
+    }
+    
   // Parse Dm for valid audio file
   try{
     console.log(`[${message.channel.type}] ${message.author.tag}: ${message.content}`);
