@@ -18,7 +18,8 @@ const client = new Client({
         GatewayIntentBits.GuildMessages,
         GatewayIntentBits.MessageContent, // lets the bot parse contents of messages 
         GatewayIntentBits.DirectMessages
-    ]
+    ],
+    partials: ['CHANNEL'],
 });
 
 const commandQueue = []; //queue of tts command calls so that they dont run at the same time
@@ -79,8 +80,7 @@ client.on(Events.MessageCreate, async message => {
   
   // Parse Dm for valid audio file
   try{
-
-    console.log('dm received');
+    console.log(message.channel.type);
     if (message.channel.type == ChannelType.DM && message.attachments.size > 0) {
       await annoyFile(message);
     }
