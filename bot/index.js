@@ -6,7 +6,7 @@
  * if it is send it publicly
  */
 
-import { Client, GatewayIntentBits, Events, Emoji } from 'discord.js';
+import { Client, GatewayIntentBits, Events, Emoji, ChannelType } from 'discord.js';
 import { annoy, annoyFile } from './commands/annoy/annoy.js';
 import { query } from './commands/query/query.js';
 import { ttm } from './commands/ttm/ttm.js';
@@ -81,7 +81,7 @@ client.on(Events.MessageCreate, async message => {
   try{
 
     console.log('dm received');
-    if (message.channel.type == 1 && message.attachments.size > 0) {
+    if (message.channel.type == ChannelType.DM && message.attachments.size > 0) {
       await annoyFile(message);
     }
   } catch (error) {
