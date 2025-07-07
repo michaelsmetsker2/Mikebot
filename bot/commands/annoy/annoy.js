@@ -46,7 +46,7 @@ export const annoyFile = async(message) => {
   for (const attachment of message.attachments.values()) { // could contain multiple files
 
     let audioFilePath = attachment.url; // files url
-    const extension = path.extname(attatchment.name).toLowerCase(); // files extension
+    const extension = path.extname(attachment.name).toLowerCase(); // files extension
     
     console.log(extension);
 
