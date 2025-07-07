@@ -69,7 +69,7 @@ export const annoyFile = async(message) => {
       const duration = await new Promise((resolve, reject) => {
         const probe = spawn ('ffprobe', [
           '-v', 'error',
-          'show_entries', 'format=duration',
+          '-show_entries', 'format=duration',
           '-of', 'default=noprint_wrappers=1:nokey=1',
           tempFilePath
         ]);
