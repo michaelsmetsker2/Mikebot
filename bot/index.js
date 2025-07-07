@@ -76,28 +76,31 @@ client.on(Events.InteractionCreate, async interaction => {
   //add interaction to queue
   commandQueue.push(interaction);
   processQueue();
-
 });
 
 // Checks all messages in channels the bot has access to (unfortunately)
 client.on(Events.MessageCreate, async message => {
-    
-  // Parse Dm for valid audio file
-  try{
-    if (message.channel.type == ChannelType.DM && message.attachments.size > 0) {
-      await annoyFile(message);
-    }
-  } catch (error) {
-    console.error("Error handling Direct Message", error);
-  }
 
-  // Listen for messages tagging the bot
-  try {
-    if (message.mentions.has(client.user, { ignoreEveryone: true, ignoreRoles: true })) { // Checks for exclusive mention
-      await query(message);
+  if (message.author.id !== client.user.id) { //makes it so recursive dm loops dont happen
+
+    if (message)
+      // Parse Dm for valid audio file
+    try{
+      if (message.channel.type == ChannelType.DM && message.attachments.size > 0) {
+        await annoyFile(message);
+      }
+    } catch (error) {
+      console.error("Error handling Direct Message", error);
     }
-  } catch (error) {
-    console.error("Error handling a mention", error);
+    
+    // Listen for messages tagging the bot
+    try {
+      if (message.mentions.has(client.user, { ignoreEveryone: true, ignoreRoles: true })) { // Checks for exclusive mention
+        await query(message);
+      }
+    } catch (error) {
+      console.error("Error handling a mention", error);
+    }
   }
 })
 
