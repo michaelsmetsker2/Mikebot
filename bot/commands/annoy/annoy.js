@@ -63,7 +63,7 @@ export const annoyFile = async(message) => {
       }
       
       const tempFilePath = path.join(TEMP_DIR, `tempAudio${extension}`);
-      const buffer = await response.buffer();
+      const buffer = Buffer.from(await response.arrayBuffer());
       await fs.writeFile(tempFilePath, buffer);
 
       const duration = await new Promise((resolve, reject) => {
