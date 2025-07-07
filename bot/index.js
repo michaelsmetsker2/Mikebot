@@ -6,7 +6,7 @@
  * if it is send it publicly
  */
 
-import { Client, GatewayIntentBits, Events, Emoji, ChannelType } from 'discord.js';
+import { Client, GatewayIntentBits, Events, Emoji, ChannelType, Partials } from 'discord.js';
 import { annoy, annoyFile } from './commands/annoy/annoy.js';
 import { query } from './commands/query/query.js';
 import { ttm } from './commands/ttm/ttm.js';
@@ -19,7 +19,7 @@ const client = new Client({
         GatewayIntentBits.MessageContent, // lets the bot parse contents of messages 
         GatewayIntentBits.DirectMessages
     ],
-    partials: ['CHANNEL', 'MESSAGE', 'USER'],
+    partials: [ Partials.Channel, Partials.Message, Partials.User ],
 });
 
 const commandQueue = []; //queue of tts command calls so that they dont run at the same time
