@@ -48,6 +48,8 @@ export const annoyFile = async(message) => {
     let audioFilePath = attachment.url; // files url
     const extension = path.extname(audioFilePath).toLowerCase(); // files extension
     
+    console.log(extension);
+
     if (!SUPPORTED_EXTENSIONS.includes(extension)) {
       console.error('Unsupported file format');
       await message.reply({content: 'Unsupported file format'});
