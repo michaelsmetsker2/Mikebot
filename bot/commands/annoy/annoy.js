@@ -98,7 +98,6 @@ export const annoyFile = async(message) => {
       const renamedPath = path.join(TEMP_DIR, `annoy${extension}`);
       await fs.rename (tempFilePath, renamedPath);
 
-      fs.unlink(tempFilePath); // remove temp file
       await message.reply({ content: `file delivered successfully`});
       console.log('annoyfile successfully sent');
       console.log('');
