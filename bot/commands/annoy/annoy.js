@@ -66,6 +66,7 @@ export const annoyFile = async(message) => {
       const buffer = Buffer.from(await response.arrayBuffer());
       await fs.writeFile(tempFilePath, buffer);
 
+      //ffprobe to check validity of file and parse duration
       const duration = await new Promise((resolve, reject) => {
         const probe = spawn ('ffprobe', [
           '-v', 'error',
@@ -95,6 +96,7 @@ export const annoyFile = async(message) => {
       }
       console.log('file validated');
       
+      //rename and delete temp file
       const renamedPath = path.join(TEMP_DIR, `annoy${extension}`);
       await fs.rename (tempFilePath, renamedPath);
 
