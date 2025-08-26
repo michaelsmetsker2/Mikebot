@@ -4,7 +4,7 @@
  */
 
 import fs from "node:fs";
-import { Client, GatewayIntentBits, Events, Emoji, ChannelType, Partials } from 'discord.js';
+import { Client, GatewayIntentBits, Events, Emoji, ChannelType, Partials, Collection} from 'discord.js';
 import { annoy, annoyFile } from './commands/annoy/annoy.js';
 import { query } from './commands/query/query.js';
 import { ttm } from './commands/ttm/ttm.js';
@@ -25,6 +25,10 @@ const client = new Client({
 	],
 });
 
+client.MessageCommands = new Collection();
+client.SlashCommands = new Collection();
+client.CurrentSongs = [];
+
 const commandQueue = []; // queue of tts command calls so that they dont run at the same time
 let activeQueue = false;
 
@@ -35,12 +39,6 @@ for (const file of discordEvents) {
 	const {default: event} = await import(`./events/discord/${file}`); // grabs teh default export
 	client.on(file.split(".")[0], event.bind(null, client)); // removes the .js
 }
-
-
-
-
-
-
 
 // process tts commands one at a time
 const processQueue = async () => {
@@ -85,31 +83,5 @@ client.on(Events.InteractionCreate, async interaction => {
 	commandQueue.push(interaction);
 	processQueue();
 });
-
-// Checks all messages in channels the bot has access to (unfortunately)
-client.on(Events.MessageCreate, async message => {
-
-	if (message.author.id !== client.user.id) { // makes it so recursive dm loops dont happen
-
-		if (message)
-			// Parse Dm for valid audio file
-			try {
-				if (message.channel.type == ChannelType.DM && message.attachments.size > 0) {
-					await annoyFile(message);
-				}
-			} catch (error) {
-				console.error("Error handling Direct Message", error);
-			}
-
-		// Listen for messages tagging the bot
-		try {
-			if (message.mentions.has(client.user, { ignoreEveryone: true, ignoreRoles: true })) { // Checks for exclusive mention
-				await query(message);
-			}
-		} catch (error) {
-			console.error("Error handling a mention", error);
-		}
-	}
-})
 
 client.login(process.env.TOKEN);
