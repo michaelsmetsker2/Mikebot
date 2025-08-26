@@ -1,107 +1,115 @@
 /**
  * @fileoverview
- * Main file of mikebot, handles command activations and initializing the bot
- * 
- * TODO see if mikebot is in the server, if not send an ephemeral message,
- * if it is send it publicly
+ * Main file of mikebot, sets it all up and such
  */
 
+import fs from "node:fs";
 import { Client, GatewayIntentBits, Events, Emoji, ChannelType, Partials } from 'discord.js';
 import { annoy, annoyFile } from './commands/annoy/annoy.js';
 import { query } from './commands/query/query.js';
 import { ttm } from './commands/ttm/ttm.js';
 import 'dotenv/config';
 
-const client = new Client({ 
-    intents: [
-        GatewayIntentBits.Guilds, // lets the bot join servers
-        GatewayIntentBits.GuildMessages,
-        GatewayIntentBits.MessageContent, // lets the bot parse contents of messages 
-        GatewayIntentBits.DirectMessages
-    ],
-    partials: [ 
-      Partials.Channel, 
-      Partials.Message, 
-      Partials.User
-    ],
+const client = new Client({
+	intents: [
+		GatewayIntentBits.Guilds, // lets the bot join servers
+		GatewayIntentBits.GuildMessages,
+		GatewayIntentBits.GuildVoiceStates,
+		GatewayIntentBits.MessageContent, // lets the bot parse contents of messages 
+		GatewayIntentBits.DirectMessages
+	],
+	partials: [
+		Partials.Channel,
+		Partials.Message,
+		Partials.User
+	],
 });
 
-const commandQueue = []; //queue of tts command calls so that they dont run at the same time
+const commandQueue = []; // queue of tts command calls so that they dont run at the same time
 let activeQueue = false;
 
-//process tts commands one at a time
-const processQueue = async () => {
-  if (activeQueue) return; //so the queue is not processed multiple times at once
-  activeQueue = true;
-
-  //process commands untill empty
-  while (commandQueue.length > 0) {
-    const interaction = commandQueue.shift();
-    
-    try {
-      switch (interaction.commandName) {
-        case 'annoy':
-          await annoy(interaction);
-          break;
-        case 'query':
-          await query(interaction);
-          break;
-        case 'ttm':
-          await ttm(interaction);
-          break;
-      }
-    }
-    catch (error) {
-      console.error('error processing command ', interaction.commandName, " error: ", error);
-      await interaction.editReply('An error occurred while processing your command.');
-    }
-  }
-  activeQueue = false;
+// Even Handlers
+console.log('loading discord events');
+const discordEvents = fs.readdirSync(`./events/discord`);
+for (const file of discordEvents) {
+	const {default: event} = await import(`./events/discord/${file}`); // grabs teh default export
+	client.on(file.split(".")[0], event.bind(null, client)); // removes the .js
 }
 
-//client is ready
-client.once(Events.ClientReady, c => {
-  console.log(`Logged in as ${c.user.tag}`);
-});
 
-//listen for commands
+
+
+
+
+
+// process tts commands one at a time
+const processQueue = async () => {
+	if (activeQueue) return; // so the queue is not processed multiple times at once
+	activeQueue = true;
+
+	// process commands untill empty
+	while (commandQueue.length > 0) {
+		const interaction = commandQueue.shift();
+
+		try {
+			switch (interaction.commandName) {
+				case 'annoy':
+					await annoy(interaction);
+					break;
+				case 'query':
+					await query(interaction);
+					break;
+				case 'ttm':
+					await ttm(interaction);
+					break;
+			}
+		}
+		catch (error) {
+			console.error('error processing command ', interaction.commandName, " error: ", error);
+			await interaction.editReply('An error occurred while processing your command.');
+		}
+	}
+	activeQueue = false;
+}
+
+// listen for commands
 client.on(Events.InteractionCreate, async interaction => {
-  if (!interaction.isChatInputCommand()) return;
+	if (!interaction.isChatInputCommand()) return;
 
-  //defer reply to prevent timeout (for 15 minutes)
-  await interaction.deferReply();
-  
-  console.log('Registered command: ', interaction.commandName, ' from ', interaction.user.tag);
+	// defer reply to prevent timeout (for 15 minutes)
+	await interaction.deferReply();
 
-  //add interaction to queue
-  commandQueue.push(interaction);
-  processQueue();
+	console.log('Registered command: ', interaction.commandName, ' from ', interaction.user.tag);
+
+	// add interaction to queue
+	commandQueue.push(interaction);
+	processQueue();
 });
 
 // Checks all messages in channels the bot has access to (unfortunately)
 client.on(Events.MessageCreate, async message => {
 
-  if (message.author.id !== client.user.id) { //makes it so recursive dm loops dont happen
+	if (message.author.id !== client.user.id) { // makes it so recursive dm loops dont happen
 
-    if (message)
-      // Parse Dm for valid audio file
-    try{
-      if (message.channel.type == ChannelType.DM && message.attachments.size > 0) {
-        await annoyFile(message);
-      }
-    } catch (error) {
-      console.error("Error handling Direct Message", error);
-    }
-    
-    // Listen for messages tagging the bot
-    try {
-      if (message.mentions.has(client.user, { ignoreEveryone: true, ignoreRoles: true })) { // Checks for exclusive mention
-        await query(message);
-      }
-    } catch (error) {
-      console.error("Error handling a mention", error);
-    }
-  }
+		if (message)
+			// Parse Dm for valid audio file
+			try {
+				if (message.channel.type == ChannelType.DM && message.attachments.size > 0) {
+					await annoyFile(message);
+				}
+			} catch (error) {
+				console.error("Error handling Direct Message", error);
+			}
+
+		// Listen for messages tagging the bot
+		try {
+			if (message.mentions.has(client.user, { ignoreEveryone: true, ignoreRoles: true })) { // Checks for exclusive mention
+				await query(message);
+			}
+		} catch (error) {
+			console.error("Error handling a mention", error);
+		}
+	}
 })
 
 client.login(process.env.TOKEN);
