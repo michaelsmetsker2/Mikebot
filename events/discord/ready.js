@@ -6,7 +6,7 @@ export default async (client) => {
     await client.user.setPresence({
         activities: [
             {
-                name: `sam through his window`,
+                name: `for terrorist activity`,
                 type: Discord.ActivityType.Watching,
             },
         ],
