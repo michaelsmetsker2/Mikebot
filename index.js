@@ -29,23 +29,23 @@ client.MessageCommands = new Collection();
 client.SlashCommands = new Collection();
 client.CurrentSongs = [];
 
-const commandQueue = []; // queue of tts command calls so that they dont run at the same time
-let activeQueue = false;
-
-// Even Handlers
+// Event Handler, takes the defualt export from each file
 console.log('loading discord events');
 const discordEvents = fs.readdirSync(`./events/discord`);
 for (const file of discordEvents) {
-	const {default: event} = await import(`./events/discord/${file}`); // grabs teh default export
+	const {default: event} = await import(`./events/discord/${file}`);
 	client.on(file.split(".")[0], event.bind(null, client)); // removes the .js
 }
+
+const commandQueue = []; // queue of tts command calls so that they dont run at the same time
+let activeQueue = false;
 
 // process tts commands one at a time
 const processQueue = async () => {
 	if (activeQueue) return; // so the queue is not processed multiple times at once
 	activeQueue = true;
 
-	// process commands untill empty
+	// process commands until empty
 	while (commandQueue.length > 0) {
 		const interaction = commandQueue.shift();
 
