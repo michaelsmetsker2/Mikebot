@@ -33,8 +33,9 @@ client.CurrentSongs = [];
 console.log('loading discord events');
 const discordEvents = fs.readdirSync(`./events/discord`);
 for (const file of discordEvents) {
-	const {default: event} = await import(`./events/discord/${file}`);
-	client.on(file.split(".")[0], event.bind(null, client)); // removes the .js
+    const eventModule = await import(`./events/discord/${file}`);
+    const event = eventModule.default; // <-- grab the default export
+    client.on(file.split(".")[0], event.bind(null, client));
 }
 
 const commandQueue = []; // queue of tts command calls so that they dont run at the same time
