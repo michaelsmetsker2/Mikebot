@@ -2,7 +2,6 @@
 import { ChannelType, } from 'discord.js';
 import 'dotenv/config';
 
-
 import { annoyFile } from '../../commands/annoy.js';
 import query from '../../commands/query.js';
 
