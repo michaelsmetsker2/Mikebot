@@ -5,7 +5,7 @@ import 'dotenv/config';
 import { annoyFile } from '../../commands/annoy.js';
 import query from '../../commands/query.js';
 
-export default async (client, message) => {
+export default async (client, distube, message) => {
 
     if (message.system || message.author.bot) return;
 
