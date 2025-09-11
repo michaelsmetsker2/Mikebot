@@ -1,3 +1,3 @@
 export default async function (queue) {
-    queue.volume = 100;
+    queue.volume = 40;
 }

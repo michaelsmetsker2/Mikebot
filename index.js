@@ -62,9 +62,10 @@ for (const file of discordEvents) {
 console.log('loading distube events');
 const distubeEvents = readdirSync(`./events/distube`);
 for (const file of distubeEvents) {
-	const eventModule = await import(`./events/distube/${file}`);
-	const event = eventModule.default; // <-- grab the default export
-    distube.on(file.split(".")[0], event.bind(null, client));
+    const eventModule = await import(`./events/distube/${file}`);
+    const event = eventModule.default; // <-- grab default export
+    const eventName = file.split(".")[0]; // e.g., playSong.js -> "playSong"
+    distube.on(eventName, event); // <-- pass handler directly
 }
 
 // Registering slash commands
