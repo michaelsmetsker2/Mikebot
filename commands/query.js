@@ -27,7 +27,7 @@ export const command = {
 }
 
 export default {
-    name: query,
+    name: 'query',
 	inVoiceChannel: false,
     async execute (input) {
         const sender = input.user?.tag || input.author?.tag || 'Unknown';

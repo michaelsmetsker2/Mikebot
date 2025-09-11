@@ -1,9 +1,3 @@
-import { Events, Client } from 'discord.js';
-
-import annoy from '../../commands/annoy.js';
-import query from '../../commands/query.js';
-import ttm from '../../commands/annoy.js';
-
 import 'dotenv/config';
 
 const commandQueue = []; // queue of tts command calls so that they dont run at the same time

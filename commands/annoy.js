@@ -33,7 +33,7 @@ export const command = {
 };
 
 export default {
-	name: annoy,
+	name: 'annoy',
 	inVoiceChannel: false,
 	async execute (interaction) {
 		const message = interaction.options.getString('message'); // Message attatched to the command

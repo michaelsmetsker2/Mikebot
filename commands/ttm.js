@@ -22,7 +22,7 @@ export const command = {
 }
 
 export default {
-    name: ttm,
+    name: 'ttm',
     inVoiceChannel: false,
     async execute(interaction) {
         
