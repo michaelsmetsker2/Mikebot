@@ -3,7 +3,8 @@
  * Entry point and brings the bot and event listeners online
  */
 
-import { readdirSync } from "fs";
+import path from 'path';
+import { readdirSync, statSync } from "fs";
 import { Client, GatewayIntentBits, Partials, Collection} from 'discord.js';
 
 import { DisTube } from "distube";
@@ -67,13 +68,20 @@ for (const file of distubeEvents) {
 }
 
 // Registering slash commands
-console.log(`Loading Slash Commands`);
-const slashCommands = readdirSync(`./commands`)
-for (const file of slashCommands) {
-	const command = await import(`./commands/${file}`); // <-- grab the default export
 
-	const commandName = file.replace(/\.js$/, '');
-	client.SlashCommands.set(commandName, command);
+console.log('Loading Slash Commands');
+
+const files = readdirSync(`./commands`);
+for (const file of files) {
+    const fullPath = path.join('./commands', file);
+
+    // Only import JS files, skip directories
+    if (statSync(fullPath).isFile() && file.endsWith('.js')) {
+        const commandModule = await import(`./commands/${file}`);
+        const command = commandModule.default;
+
+        const commandName = file.replace(/\.js$/, '');
+        client.SlashCommands.set(commandName, command);
+    }
 }
-
 client.login(process.env.TOKEN);
