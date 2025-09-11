@@ -39,14 +39,11 @@ export default {
                 `**Up next:**\n${upNext}`
             )
             .addFields(
-                { name: "Volume", value: `${queue.volume}%`, inline: true },
-                { name: "Autoplay", value: `${queue.autoplay ? "On" : "Off"}`, inline: true },
                 { 
                     name: "Loop", 
                     value: `${queue.repeatMode === RepeatMode.QUEUE ? "Queue" : queue.repeatMode === RepeatMode.SONG ? "Song" : "Off"}`, 
                     inline: true 
-                },
-                { name: "Filters", value: `${queue.filters.names.join(", ") || "Off"}`, inline: false }
+                }
             );
 
         await interaction.editReply({ embeds: [embed] });
