@@ -66,4 +66,12 @@ for (const file of distubeEvents) {
     distube.on(file.split(".")[0], event.bind(null, client));
 }
 
+// Registering slash commands
+console.log(`Loading Slash Commands`);
+const slashCommands = readdirSync(`./commands`)
+for (const file of slashCommands) {
+	const command = await import(`./commands/${file}`); // <-- grab the default export
+	client.SlashCommands.set(command.data.name, command);
+}
+
 client.login(process.env.TOKEN);
