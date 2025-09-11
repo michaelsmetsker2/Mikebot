@@ -2,7 +2,6 @@ import { EmbedBuilder } from 'discord.js';
 
 export default async function (queue, song) {
     try {
-        console.log('test');
         const interaction = song.metadata?.interaction;
         if (!interaction) return;
 
