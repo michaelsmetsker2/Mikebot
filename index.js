@@ -71,7 +71,9 @@ console.log(`Loading Slash Commands`);
 const slashCommands = readdirSync(`./commands`)
 for (const file of slashCommands) {
 	const command = await import(`./commands/${file}`); // <-- grab the default export
-	client.SlashCommands.set(command.data.name, command);
+
+	const commandName = file.replace(/\.js$/, '');
+	client.SlashCommands.set(commandName, command);
 }
 
 client.login(process.env.TOKEN);
