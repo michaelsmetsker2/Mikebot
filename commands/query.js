@@ -10,17 +10,23 @@ import fs from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { AttachmentBuilder } from 'discord.js';
-import { sleep } from '../../utils.js';
+import { sleep } from '../utils.js';
 
 import 'dotenv/config';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
-const RESPONSES_PATH = path.join(__dirname, 'responses.txt'); // Text file full of all possible responces.
+const RESPONSES_PATH = path.join(__dirname, 'query', 'responses.txt'); // Text file full of all possible responces.
 const QUERY_PATH = path.join(process.env.TEMP_DIR, 'query.txt'); // Text file to feed external TTS engine.
 const WAV_PATH = path.join(process.env.TEMP_DIR, 'queryOutput.wav'); // File output from external TTS engine.
 
-export const query = async (input) => {
+export const command = {
+    name: 'query',
+    description: 'Ask mikebot what he thinks about something',
+    type: 1, // CHAT_INPUT
+}
+
+export default query = async (input) => {
     const sender = input.user?.tag || input.author?.tag || 'Unknown';
     console.log('processing query from: ', sender);
 

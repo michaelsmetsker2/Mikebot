@@ -20,7 +20,19 @@ const SUPPORTED_EXTENSIONS = ['.wav', '.mp3', '.m4a', '.aac', '.ogg', '.flac'];
 // Generally the temp directory should by in a shared location
 const ttsPath = path.join(TEMP_DIR, 'tts.txt');
 
-export const annoy = async (interaction) => {
+export const command = {
+    name: 'annoy',
+    description: 'make willfromafar say the given text to michael',
+    options: [{
+        type: 3, // string
+        name: 'message',
+        description: 'the message that will be read aloud',
+        required: true
+    }],
+    type: 1, // CHAT_INPUT
+};
+
+export default annoy = async (interaction) => {
 	const message = interaction.options.getString('message'); // Message attatched to the command
 	const sender = interaction.user.tag; // or .username
 

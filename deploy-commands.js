@@ -1,6 +1,7 @@
 // deploy-commands.js
 import { REST, Routes, SlashCommandBuilder } from 'discord.js';
-import { ALL_COMMANDS } from './commands.js';
+
+//TODO for loop to import all commands from the command directory
 
 import dotenv from 'dotenv';
 dotenv.config({ path: '../.env' });

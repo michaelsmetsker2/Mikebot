@@ -1,11 +1,10 @@
 // Checks all messages in channels the bot has access to (unfortunately)
-import fs from "node:fs";
 import { ChannelType, } from 'discord.js';
 import 'dotenv/config';
 
 
-import { annoyFile } from '../../commands/annoy/annoy.js';
-import { query } from '../../commands/query/query.js';
+import { annoyFile } from '../../commands/annoy.js';
+import { query } from '../../commands/query.js';
 
 export default async (client, message) => {
 

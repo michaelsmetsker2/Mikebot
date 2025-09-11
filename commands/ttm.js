@@ -3,13 +3,25 @@ import path from 'node:path';
 import 'dotenv/config';
 import { AttachmentBuilder } from 'discord.js';
 import { spawn } from 'node:child_process';
-import { archiveWav } from '../../utils.js';
+import { archiveWav } from '../utils.js';
 
 const CHARACTER_LIMIT = 150;
 
 const WAVPATH = path.join(process.env.TEMP_DIR, 'ttm.wav');
 
-export const ttm = async (interaction) => {
+export const command = {
+    name: 'ttm',
+    description: 'text to michael',
+    options: [{
+        type: 3, //string
+        name: 'text',
+        description: 'text that will to michael',
+        required: true
+    }],
+    type: 1, // CHAT_INPUT
+}
+
+export default ttm = async (interaction) => {
 
     const sender = interaction.user.tag; // or .username
     const message = interaction.options.getString('text'); //get message

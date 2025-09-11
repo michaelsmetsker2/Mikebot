@@ -1,13 +1,19 @@
 /**
  * @fileoverview
- * Main file of mikebot, sets it all up and such
+ * Entry point and brings the bot and event listeners online
  */
 
-import fs from "node:fs";
-import { Client, GatewayIntentBits, Events, Emoji, ChannelType, Partials, Collection} from 'discord.js';
-import { annoy, annoyFile } from './commands/annoy/annoy.js';
-import { query } from './commands/query/query.js';
-import { ttm } from './commands/ttm/ttm.js';
+import { readdirSync } from "fs";
+import { Client, GatewayIntentBits, Partials, Collection} from 'discord.js';
+
+import { DisTube } from "distube";
+import { YouTubePlugin } from "@distube/youtube";
+import SoundCloudPlugin from "@distube/soundcloud";
+import { SpotifyPlugin } from "@distube/spotify";
+import DeezerPlugin from "@distube/deezer";
+import { DirectLinkPlugin } from "@distube/direct-link";
+import { FilePlugin } from "@distube/file";
+
 import 'dotenv/config';
 
 const client = new Client({
@@ -25,64 +31,39 @@ const client = new Client({
 	],
 });
 
+// Create DisTube object
+const distube = new DisTube(client, {
+  plugins: [
+    new YouTubePlugin(),
+    new SoundCloudPlugin(),
+    new SpotifyPlugin(),
+    new DeezerPlugin(),
+    new DirectLinkPlugin(),
+    new FilePlugin(),
+  ],
+  emitAddListWhenCreatingQueue: true,
+  emitAddSongWhenCreatingQueue: true,
+});
+
 client.MessageCommands = new Collection();
 client.SlashCommands = new Collection();
-client.CurrentSongs = [];
 
-// Event Handler, takes the defualt export from each file
+// Registers Discord events
 console.log('loading discord events');
-const discordEvents = fs.readdirSync(`./events/discord`);
+const discordEvents = readdirSync(`./events/discord`);
 for (const file of discordEvents) {
     const eventModule = await import(`./events/discord/${file}`);
     const event = eventModule.default; // <-- grab the default export
     client.on(file.split(".")[0], event.bind(null, client));
 }
 
-const commandQueue = []; // queue of tts command calls so that they dont run at the same time
-let activeQueue = false;
-
-// process tts commands one at a time
-const processQueue = async () => {
-	if (activeQueue) return; // so the queue is not processed multiple times at once
-	activeQueue = true;
-
-	// process commands until empty
-	while (commandQueue.length > 0) {
-		const interaction = commandQueue.shift();
-
-		try {
-			switch (interaction.commandName) {
-				case 'annoy':
-					await annoy(interaction);
-					break;
-				case 'query':
-					await query(interaction);
-					break;
-				case 'ttm':
-					await ttm(interaction);
-					break;
-			}
-		}
-		catch (error) {
-			console.error('error processing command ', interaction.commandName, " error: ", error);
-			await interaction.editReply('An error occurred while processing your command.');
-		}
-	}
-	activeQueue = false;
+// Registers Distube events
+console.log('loading distube events');
+const distubeEvents = readdirSync(`./events/distube`);
+for (const file of distubeEvents) {
+	const eventModule = await import(`./events/distube/${file}`);
+	const event = eventModule.default; // <-- grab the default export
+    distube.on(file.split(".")[0], event.bind(null, client));
 }
-
-// listen for commands
-client.on(Events.InteractionCreate, async interaction => {
-	if (!interaction.isChatInputCommand()) return;
-
-	// defer reply to prevent timeout (for 15 minutes)
-	await interaction.deferReply();
-
-	console.log('Registered command: ', interaction.commandName, ' from ', interaction.user.tag);
-
-	// add interaction to queue
-	commandQueue.push(interaction);
-	processQueue();
-});
 
 client.login(process.env.TOKEN);
