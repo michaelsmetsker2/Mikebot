@@ -43,9 +43,9 @@ const processQueue = async () => {
 export default async (client, interaction) => {
 	if (!interaction.isChatInputCommand()) return;
 
-	//invalid command
-	if (!cmd) return; 
 	const command = client.SlashCommands.get(interaction.commandName);
+	//invalid command
+	if (!command) return; 
 	
 	console.log('Registered command: ', interaction.commandName, ' from ', interaction.user.tag);
 	// defer reply to prevent timeout (for 15 minutes)
