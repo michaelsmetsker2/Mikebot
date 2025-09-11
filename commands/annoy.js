@@ -32,24 +32,29 @@ export const command = {
     type: 1, // CHAT_INPUT
 };
 
-export default async function annoy(interaction) {
-	const message = interaction.options.getString('message'); // Message attatched to the command
-	const sender = interaction.user.tag; // or .username
+export default {
+	name: annoy,
+	inVoiceChannel: false,
+	async execute (interaction) {
+		const message = interaction.options.getString('message'); // Message attatched to the command
+		const sender = interaction.user.tag; // or .username
 
-	console.log(sender, 'attempts to annoy you with: ', message);
+		console.log(sender, 'attempts to annoy you with: ', message);
 
-	if (message.length > CHARACTER_LIMIT) { // Invalid message
-		console.log(sender, '\'s message was to long');
-		await interaction.editReply('fuck you i\'m not listening to all of that, (over ', CHARACTER_LIMIT, ' characters)');
-		return;
-	} else { // Valid message
+		if (message.length > CHARACTER_LIMIT) { // Invalid message
+			console.log(sender, '\'s message was to long');
+			await interaction.editReply('fuck you i\'m not listening to all of that, (over ', CHARACTER_LIMIT, ' characters)');
+			return;
+		} else { // Valid message
 
-		await fs.writeFile(ttsPath, message); //write to file
-		await interaction.editReply('Message has been sent!'); // Todo: check if file has been deleted
+			await fs.writeFile(ttsPath, message); //write to file
+			await interaction.editReply('Message has been sent!'); // Todo: check if file has been deleted
 
-		console.log('Annoy message parsed and written to file.');
-		console.log(); // blank line in between commands
+			console.log('Annoy message parsed and written to file.');
+			console.log(); // blank line in between commands
 	}
+}
+
 };
 
 export const annoyFile = async (message) => {

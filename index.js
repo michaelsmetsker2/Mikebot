@@ -79,9 +79,7 @@ for (const file of files) {
     if (statSync(fullPath).isFile() && file.endsWith('.js')) {
         const commandModule = await import(`./commands/${file}`);
         const command = commandModule.default;
-
-        const commandName = file.replace(/\.js$/, '');
-        client.SlashCommands.set(commandName, command);
+        client.SlashCommands.set(command.name, command);
     }
 }
 client.login(process.env.TOKEN);

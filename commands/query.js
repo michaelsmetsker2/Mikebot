@@ -25,28 +25,33 @@ export const command = {
     description: 'Ask mikebot what he thinks about something',
     type: 1, // CHAT_INPUT
 }
-export default async function query(input) {
-    const sender = input.user?.tag || input.author?.tag || 'Unknown';
-    console.log('processing query from: ', sender);
 
-    const data = await fs.readFile(RESPONSES_PATH, 'utf-8');
-    const lines = data.split(/\r?\n/).filter(line => line.trim() !== ''); // Split the file int lines
-    const randomLine = lines[Math.floor(Math.random() * lines.length)]; // Pick a random line
+export default {
+    name: query,
+	inVoiceChannel: false,
+    async execute (input) {
+        const sender = input.user?.tag || input.author?.tag || 'Unknown';
+        console.log('processing query from: ', sender);
 
-    await fs.writeFile(QUERY_PATH, randomLine, 'utf-8'); // Write random line to output file
-    await sleep(450); //gives ample time for the external TTS engine to process the file and writ the output
-    const file = new AttachmentBuilder(WAV_PATH); //replies with file written by tts engine
-    
-    if (input.editReply) { // The reply has only been defered if it was called from a slash command
-        await input.editReply({ conten: '', files: [file] })
-    } else {
-        await input.reply({ content: '', files: [file] })
+        const data = await fs.readFile(RESPONSES_PATH, 'utf-8');
+        const lines = data.split(/\r?\n/).filter(line => line.trim() !== ''); // Split the file int lines
+        const randomLine = lines[Math.floor(Math.random() * lines.length)]; // Pick a random line
+
+        await fs.writeFile(QUERY_PATH, randomLine, 'utf-8'); // Write random line to output file
+        await sleep(450); //gives ample time for the external TTS engine to process the file and writ the output
+        const file = new AttachmentBuilder(WAV_PATH); //replies with file written by tts engine
+        
+        if (input.editReply) { // The reply has only been defered if it was called from a slash command
+            await input.editReply({ conten: '', files: [file] })
+        } else {
+            await input.reply({ content: '', files: [file] })
+        }
+
+        //delete temp files
+        await fs.unlink(QUERY_PATH);
+        await fs.unlink(WAV_PATH);
+        
+        console.log('query successfully completed');
+        console.log(); // blank linke in between commands
     }
-
-    //delete temp files
-    await fs.unlink(QUERY_PATH);
-    await fs.unlink(WAV_PATH);
-    
-    console.log('query successfully completed');
-    console.log(); // blank linke in between commands
-};
+}
