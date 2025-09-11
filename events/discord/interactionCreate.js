@@ -1,4 +1,4 @@
-import { Events } from 'discord.js';
+import { Events, Client } from 'discord.js';
 
 import annoy from '../../commands/annoy.js';
 import query from '../../commands/query.js';
@@ -40,7 +40,7 @@ const processQueue = async () => {
 }
 
 // listen for commands
-client.on(Events.InteractionCreate, async interaction => {
+export default async (client, interaction) => {
 	if (!interaction.isChatInputCommand()) return;
 
 	// defer reply to prevent timeout (for 15 minutes)
@@ -51,4 +51,4 @@ client.on(Events.InteractionCreate, async interaction => {
 	// add interaction to queue
 	commandQueue.push(interaction);
 	processQueue();
-});
+};
