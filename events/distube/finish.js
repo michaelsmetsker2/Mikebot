@@ -3,7 +3,7 @@ import { EmbedBuilder } from "discord.js";
 export default async function (queue) {
 
     const embed = new EmbedBuilder()
-        .setAuthor('MikeBot')
+        .setAuthor({ name: 'MikeBot' })
         .setColor('Blurple')
         .setTitle('Finished')
         .setDescription(`Queue is now empty`)

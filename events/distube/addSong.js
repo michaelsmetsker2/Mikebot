@@ -4,7 +4,7 @@ import { EmbedBuilder } from 'discord.js';
 export default async (queue, song) => {
 
     const embed = new EmbedBuilder()
-        .setAuthor('MikeBot')
+        .setAuthor({ name: 'MikeBot' })
         .setColor('Blurple')
         .setTitle('Song Added')
         .setDescription(`New song added to the queue\n**Song:** [${song.name} (${song.formattedDuration})](${song.url})`)
