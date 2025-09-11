@@ -2,7 +2,6 @@ import { EmbedBuilder } from 'discord.js';
 
 export default async (error, queue) => {
     const embed = new EmbedBuilder()
-    .setAuthor({ name: 'MikeBot' })
     .setColor(config.ErrorColor)
     .setTitle("Error")
     .setDescription(`Sumthin bad happened: ${error}`);

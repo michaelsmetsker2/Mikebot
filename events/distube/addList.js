@@ -4,7 +4,6 @@ import { EmbedBuilder } from 'discord.js';
 export default async (queue, playlist) => {
 
     const embed = new EmbedBuilder()
-        .setAuthor({ name: 'MikeBot' })
         .setColor('Blurple')
         .setTitle('Playlist added')
         .setDescription(`Added \`${playlist.name}\` (${playlist.songs.length} songs) to the queue`)
