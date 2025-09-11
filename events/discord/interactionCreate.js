@@ -25,7 +25,7 @@ const processQueue = async (client) => {
 }
 
 // listen for commands
-export default async (client, interaction, distube) => {
+export default async (client, distube, interaction) => {
 	if (!interaction.isChatInputCommand()) return;
 
 	const command = client.SlashCommands.get(interaction.commandName);
