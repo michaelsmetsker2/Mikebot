@@ -20,8 +20,7 @@ export const command = {
     }],
     type: 1, // CHAT_INPUT
 }
-
-export default ttm = async (interaction) => {
+export default async function ttm(interaction) {
 
     const sender = interaction.user.tag; // or .username
     const message = interaction.options.getString('text'); //get message

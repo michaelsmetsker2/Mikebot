@@ -25,8 +25,7 @@ export const command = {
     description: 'Ask mikebot what he thinks about something',
     type: 1, // CHAT_INPUT
 }
-
-export default query = async (input) => {
+export default async function query(input) {
     const sender = input.user?.tag || input.author?.tag || 'Unknown';
     console.log('processing query from: ', sender);
 

@@ -32,7 +32,7 @@ export const command = {
     type: 1, // CHAT_INPUT
 };
 
-export default annoy = async (interaction) => {
+export default async function annoy(interaction) {
 	const message = interaction.options.getString('message'); // Message attatched to the command
 	const sender = interaction.user.tag; // or .username
 
