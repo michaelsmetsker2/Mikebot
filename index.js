@@ -10,7 +10,7 @@ import { DisTube } from "distube";
 import { YouTubePlugin } from "@distube/youtube";
 import SoundCloudPlugin from "@distube/soundcloud";
 import { SpotifyPlugin } from "@distube/spotify";
-import DeezerPlugin from "@distube/deezer";
+import { DeezerPlugin } from "@distube/deezer";
 import { DirectLinkPlugin } from "@distube/direct-link";
 import { FilePlugin } from "@distube/file";
 
