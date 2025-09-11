@@ -4,7 +4,7 @@ import 'dotenv/config';
 
 
 import { annoyFile } from '../../commands/annoy.js';
-import { query } from '../../commands/query.js';
+import query from '../../commands/query.js';
 
 export default async (client, message) => {
 
