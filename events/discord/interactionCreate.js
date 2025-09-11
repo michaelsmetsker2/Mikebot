@@ -25,7 +25,7 @@ const processQueue = async (client) => {
 }
 
 // listen for commands
-export default async (client, interaction) => {
+export default async (client, interaction, distube) => {
 	if (!interaction.isChatInputCommand()) return;
 
 	const command = client.SlashCommands.get(interaction.commandName);
@@ -36,7 +36,17 @@ export default async (client, interaction) => {
 	
 	if (command.inVoiceChannel) {
 
-		console.log('placeholder');
+		if (!interaction.member.voice.channel) {
+			await interaction.reply("You need to be in a vc to use this");
+			return;
+		}
+
+		if (command.playing && !distube.getQueue(interaction)) {
+			await interaction.reply('You have to play something to use this command');
+			return;
+		}
+
+		await command.execute(interaction, distube);
 	} else {
 		
 		// defer reply to prevent timeout (for 15 minutes)

@@ -55,7 +55,7 @@ const discordEvents = readdirSync(`./events/discord`);
 for (const file of discordEvents) {
     const eventModule = await import(`./events/discord/${file}`);
     const event = eventModule.default; // <-- grab the default export
-    client.on(file.split(".")[0], event.bind(null, client));
+    client.on(file.split(".")[0], event.bind(null, client, distube));
 }
 
 // Registers Distube events
