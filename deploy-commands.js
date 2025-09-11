@@ -26,7 +26,7 @@ for (const file of commandFiles) {
 }
 
 // Register commands to a specific guild
-const GUILD_ID = '1375605865700261999';
+const GUILD_ID = '478828681297657856';
 
 (async () => {
     try {
