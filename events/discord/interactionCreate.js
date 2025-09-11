@@ -1,8 +1,8 @@
 import { Events } from 'discord.js';
 
-import annoy from './commands/annoy.js';
-import query from './commands/query.js';
-import ttm from './commands/ttm.js';
+import annoy from '../../commands/annoy.js';
+import query from '../../commands/query.js';
+import ttm from '../../commands/annoy.js';
 
 import 'dotenv/config';
 
