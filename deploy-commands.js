@@ -3,7 +3,7 @@ import { readdirSync, statSync } from 'fs';
 import path from 'path';
 import dotenv from 'dotenv';
 
-dotenv.config({ path: '../.env' });
+dotenv.config({ path: './.env' });
 
 const rest = new REST({ version: '10' }).setToken(process.env.TOKEN);
 
