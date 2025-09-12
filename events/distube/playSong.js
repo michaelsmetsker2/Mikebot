@@ -2,6 +2,10 @@ import { EmbedBuilder } from 'discord.js';
 
 export default async function (queue, song) {
     try {
+
+        const requesterName = song.user?.globalName || song.user?.username || 'Unknown';
+        const requesterAvatar = song.user?.displayAvatarURL?.({ size: 1024 });
+
         const interaction = song.metadata?.interaction;
         if (!interaction) return;
 
@@ -14,7 +18,11 @@ export default async function (queue, song) {
             embeds: [
                 new EmbedBuilder()
                     .setColor('Blurple')
-                    .setDescription(`Playing: [${song.name} (${song.formattedDuration})](${song.url})`),
+                    .setDescription(`Playing: [${song.name} (${song.formattedDuration})](${song.url})`)
+                    .setFooter({
+                        text: `Requested by ${requesterName}`,
+                        iconURL: requesterAvatar,
+                    }),
             ],
         });
     } catch (err) {
