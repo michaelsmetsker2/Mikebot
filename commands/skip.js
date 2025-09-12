@@ -21,7 +21,7 @@ export default {
         try {
             const queue = distube.getQueue(vc);
             if (!queue || queue.songs.length === 0) {
-                await interaction.editReply("There’s nothing playing to skip!");
+                await interaction.editReply("There's nothing playing to skip!");
                 return;
             }
 
@@ -39,7 +39,6 @@ export default {
                 return;
             }
 
-            // Skip normally
             const song = await distube.skip(vc);
             await interaction.editReply({
                 embeds: [

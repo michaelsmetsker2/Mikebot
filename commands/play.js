@@ -21,7 +21,7 @@ export default {
         
         await interaction.reply({
             content: `🔍 Searching for: **${input}**`,
-            ephemeral: true,
+            flags: InteractionResponseFlags.Ephemeral
         });
 
         distube

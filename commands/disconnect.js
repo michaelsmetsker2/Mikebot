@@ -30,7 +30,7 @@ export default {
                 embeds: [
                     new EmbedBuilder()
                         .setColor('Blurple')
-                        .setDescription('Stopped playback, cleared the queue, and disconnected from the voice channel 🔌'),
+                        .setDescription('Stopped playback'),
                 ],
             });
         } catch (e) {
