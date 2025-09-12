@@ -1,4 +1,4 @@
-import { EmbedBuilder, InteractionResponseFlags } from 'discord.js';
+import { EmbedBuilder } from 'discord.js';
 
 export const command = {
     name: 'play',
@@ -21,7 +21,7 @@ export default {
         
         await interaction.reply({
             content: `🔍 Searching for: **${input}**`,
-            flags: InteractionResponseFlags.Ephemeral
+            ephemeral: true,
         });
 
         distube
