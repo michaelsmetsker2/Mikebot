@@ -11,5 +11,9 @@ export default async function (queue) {
         });
 
     await queue.textChannel?.send({ embeds: [embed] });
-    queue.voice.leave();
+    setTimeout(() => {
+        if (!queue.songs.length && queue.voice) {
+            queue.voice.leave();
+        }
+    }, 3 * 60 * 1000);
 }
