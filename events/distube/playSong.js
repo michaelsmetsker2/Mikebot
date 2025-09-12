@@ -14,7 +14,7 @@ export default async function (queue, song) {
             embeds: [
                 new EmbedBuilder()
                     .setColor('Blurple')
-                    .setDescription(`Playing: \`${song.name}\``),
+                    .setDescription(`Playing: [${song.name} (${song.formattedDuration})](${song.url})`),
             ],
         });
     } catch (err) {
