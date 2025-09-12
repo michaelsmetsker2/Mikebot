@@ -22,10 +22,9 @@ export default {
             if (queue) {
                 // Stop clears the queue and leaves the VC
                 await distube.stop(vc);
-            } else {
-                // No queue, just leave if connected
-                await distube.voices.leave(vc);
             }
+            
+            await distube.voices.leave(vc);
 
             await interaction.editReply({
                 embeds: [
