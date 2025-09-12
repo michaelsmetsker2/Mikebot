@@ -2,7 +2,7 @@ import { EmbedBuilder } from 'discord.js';
 
 export const command = {
     name: 'disconnect',
-    description: 'Disconnect the bot from the voice channel',
+    description: 'Stop playback, clear the queue, and disconnect the bot',
 };
 
 export default {
@@ -19,19 +19,20 @@ export default {
 
         try {
             const queue = distube.getQueue(vc);
-            if (!queue) {
-                await interaction.editReply("The bot is not currently in a voice channel!");
-                return;
+            if (queue) {
+                // Stop clears the queue and leaves the VC
+                await distube.stop(vc);
+            } else {
+                // No queue, just leave if connected
+                await distube.voices.leave(vc);
             }
-
-            await distube.voices.leave(vc);
 
             await interaction.editReply({
                 embeds: [
                     new EmbedBuilder()
                         .setColor('Blurple')
                         .setTitle('DisTube')
-                        .setDescription('Disconnected from the voice channel 🔌'),
+                        .setDescription('Stopped playback, cleared the queue, and disconnected from the voice channel 🔌'),
                 ],
             });
         } catch (e) {
