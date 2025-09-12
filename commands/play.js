@@ -1,4 +1,4 @@
-import { EmbedBuilder } from 'discord.js';
+import { EmbedBuilder, InteractionResponseFlags } from 'discord.js';
 
 export const command = {
     name: 'play',
