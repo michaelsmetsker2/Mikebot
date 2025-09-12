@@ -24,17 +24,15 @@ export default {
                 embeds: [
                     new EmbedBuilder()
                         .setColor('Blurple')
-                        .setTitle('DisTube')
                         .setDescription('Stopped!'),
                 ],
-            });
+            })
         } catch (e) {
             console.error(e);
             await interaction.editReply({
                 embeds: [
                     new EmbedBuilder()
                         .setColor('Blurple')
-                        .setTitle('DisTube')
                         .setDescription(`Error: \`${e.message || e}\``),
                 ],
             });

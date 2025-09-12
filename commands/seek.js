@@ -35,7 +35,6 @@ export default {
                 embeds: [
                     new EmbedBuilder()
                         .setColor('Blurple')
-                        .setTitle('DisTube')
                         .setDescription(`Seeked to \`${time}\` seconds`),
                 ],
             });
@@ -45,7 +44,6 @@ export default {
                 embeds: [
                     new EmbedBuilder()
                         .setColor('Blurple')
-                        .setTitle('DisTube')
                         .setDescription(`Error: \`${e.message || e}\``),
                 ],
             });

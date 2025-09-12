@@ -23,14 +23,13 @@ export default {
                 // Stop clears the queue and leaves the VC
                 await distube.stop(vc);
             }
-            
+
             await distube.voices.leave(vc);
 
             await interaction.editReply({
                 embeds: [
                     new EmbedBuilder()
                         .setColor('Blurple')
-                        .setTitle('DisTube')
                         .setDescription('Stopped playback, cleared the queue, and disconnected from the voice channel 🔌'),
                 ],
             });
@@ -40,7 +39,6 @@ export default {
                 embeds: [
                     new EmbedBuilder()
                         .setColor('Blurple')
-                        .setTitle('DisTube')
                         .setDescription(`Error: \`${e.message || e}\``),
                 ],
             });

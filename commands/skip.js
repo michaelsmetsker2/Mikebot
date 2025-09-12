@@ -45,7 +45,6 @@ export default {
                 embeds: [
                     new EmbedBuilder()
                         .setColor('Blurple')
-                        .setTitle('DisTube')
                         .setDescription(`Skipped to: **${song.name || song.url}**`),
                 ],
             });
@@ -55,7 +54,6 @@ export default {
                 embeds: [
                     new EmbedBuilder()
                         .setColor('Blurple')
-                        .setTitle('DisTube')
                         .setDescription(`Error: \`${e}\``),
                 ],
             });

@@ -54,7 +54,6 @@ export default {
                 embeds: [
                     new EmbedBuilder()
                         .setColor('Blurple')
-                        .setTitle('DisTube')
                         .setDescription(`Repeat mode set to **${modeText}** 🔁`),
                 ],
             });
@@ -64,7 +63,6 @@ export default {
                 embeds: [
                     new EmbedBuilder()
                         .setColor('Blurple')
-                        .setTitle('DisTube')
                         .setDescription(`Error: \`${e.message || e}\``),
                 ],
             });

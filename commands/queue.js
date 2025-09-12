@@ -33,7 +33,6 @@ export default {
 
         const embed = new EmbedBuilder()
             .setColor('Blurple')
-            .setTitle('DisTube Queue')
             .setDescription(
                 `**Current:** \`${currentSong.name || currentSong.url}\` - \`${queue.formattedCurrentTime}\`/\`${currentSong.formattedDuration}\`\n\n` +
                 `**Up next:**\n${upNext}`

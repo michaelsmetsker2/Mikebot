@@ -36,7 +36,6 @@ export default {
             embeds: [
                 new EmbedBuilder()
                 .setColor('Blurple')
-                .setTitle('DisTube')
                 .setDescription(`Error: \`${e.message}\``),
             ],
             });

@@ -45,7 +45,6 @@ export default {
                 embeds: [
                     new EmbedBuilder()
                         .setColor('Blurple')
-                        .setTitle('DisTube')
                         .setDescription(`Removed song: **${removedSong.name || removedSong.url}** from the queue!`),
                 ],
             });
@@ -55,7 +54,6 @@ export default {
                 embeds: [
                     new EmbedBuilder()
                         .setColor('Blurple')
-                        .setTitle('DisTube')
                         .setDescription(`Error: \`${e}\``),
                 ],
             });
