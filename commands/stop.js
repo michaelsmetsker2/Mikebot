@@ -28,6 +28,7 @@ export default {
                         .setDescription('Stopped!'),
                 ],
             });
+            queue.voice.leave();
         } catch (e) {
             console.error(e);
             await interaction.editReply({
@@ -38,6 +39,7 @@ export default {
                         .setDescription(`Error: \`${e.message || e}\``),
                 ],
             });
+            queue.voice.leave();
         }
     },
 };
