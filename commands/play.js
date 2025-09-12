@@ -19,9 +19,11 @@ export default {
         const vc = interaction.member?.voice?.channel;
         const skip = false;
         
+        await interaction.reply({
+            content: `🔍 Searching for: **${input}**`,
+            ephemeral: true,
+        });
 
-        await interaction.deferReply();
-        
         distube
         .play(vc, input, {
             skip,

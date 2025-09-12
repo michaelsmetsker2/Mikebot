@@ -6,7 +6,6 @@ export default async function (queue, error) {
         embeds: [
             new EmbedBuilder()
                 .setColor(Colors.Red)
-                .setTitle('DisTube')
                 .setDescription(error.message)
         ],
     });

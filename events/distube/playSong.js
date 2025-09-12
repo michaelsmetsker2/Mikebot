@@ -5,11 +5,15 @@ export default async function (queue, song) {
         const interaction = song.metadata?.interaction;
         if (!interaction) return;
 
-        await interaction.followUp({
+        if (queue.leaveTimeout) {
+            clearTimeout(queue.leaveTimeout);
+            queue.leaveTimeout = null;
+        }
+
+        await queue.textChannel?.send({
             embeds: [
                 new EmbedBuilder()
                     .setColor('Blurple')
-                    .setTitle('DisTube')
                     .setDescription(`Playing: \`${song.name}\``),
             ],
         });

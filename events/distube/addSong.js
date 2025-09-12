@@ -5,6 +5,11 @@ export default async (queue, song) => {
     const requesterName = song.user?.globalName || song.user?.username || 'Unknown';
     const requesterAvatar = song.user?.displayAvatarURL?.({ size: 1024 });
 
+    if (queue.leaveTimeout) {
+        clearTimeout(queue.leaveTimeout);
+        queue.leaveTimeout = null;
+    }
+
     const embed = new EmbedBuilder()
         .setColor('Blurple')
         .setTitle('Song Added')

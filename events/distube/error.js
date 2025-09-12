@@ -4,6 +4,7 @@ export default async (error, queue) => {
     const embed = new EmbedBuilder()
     .setColor('Blurple')
     .setTitle("Error")
+    .setColor(Colors.Red)
     .setDescription(`Sumthin bad happened: ${error}`);
     await queue.textChannel?.send({ embeds: [embed] });
     console.error(error)
