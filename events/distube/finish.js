@@ -8,18 +8,17 @@ export default async function (queue) {
         .setFooter({
             text: "Queue is empty",
         });
+        queue.voice.leave();
 
     await queue.textChannel?.send({ embeds: [embed] });
-    await distube.voices.leave(queue);
-    queue.voice.leave();
-        
+
     // Clear any previous timeout just in case
     if (queue.leaveTimeout) clearTimeout(queue.leaveTimeout);
 
     // Schedule leave after 3 min if no new songs are added
-    queue.leaveTimeout = setTimeout(async () => {
+    queue.leaveTimeout = setTimeout(() => {
         if (!queue.songs.length && queue.voiceConnection) {
-            await distube.voices.leave(queue);
+            queue.voice.leave();
         }
         queue.leaveTimeout = null;
     }, 3000);
