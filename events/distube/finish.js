@@ -11,7 +11,8 @@ export default async function (queue) {
 
     await queue.textChannel?.send({ embeds: [embed] });
     await distube.voices.leave(queue);
-
+    queue.voice.leave();
+        
     // Clear any previous timeout just in case
     if (queue.leaveTimeout) clearTimeout(queue.leaveTimeout);
 
