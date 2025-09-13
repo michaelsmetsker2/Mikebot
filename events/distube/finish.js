@@ -3,6 +3,7 @@ import { EmbedBuilder } from "discord.js";
 export default async function (queue) {
     const embed = new EmbedBuilder()
         .setColor('Blurple')
+        .setTitle('Queue is now empty')
         .setDescription('Queue is now empty')
         .setFooter({
             text: "Queue is empty",
@@ -14,10 +15,10 @@ export default async function (queue) {
     if (queue.leaveTimeout) clearTimeout(queue.leaveTimeout);
 
     // Schedule leave after 3 min if no new songs are added
-    queue.leaveTimeout = setTimeout(() => {
+    queue.leaveTimeout = setTimeout(async () => {
         if (!queue.songs.length && queue.voiceConnection) {
-            queue.voice.leave();
+            await distube.stop(queue);
         }
         queue.leaveTimeout = null;
-    }, 3 * 60 * 1000);
-}
+    }, 3000);
+} ///3 * 60 * 1000
