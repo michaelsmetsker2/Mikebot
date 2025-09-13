@@ -6,7 +6,7 @@ export default async function (queue) {
         .setTitle('Queue is now empty')
         .setDescription('Queue is now empty')
         .setFooter({
-            text: "Queue is empty",
+            text: "Queue is now empty",
         });
         
     await queue.textChannel?.send({ embeds: [embed] });

@@ -8,25 +8,31 @@ export const command = {
 export default {
     name: 'stop',
     inVoiceChannel: true,
-    playing: true,
     async execute(interaction, distube) {
         const vc = interaction.member?.voice?.channel;
         if (!vc) {
-            await interaction.reply("You must be in a voice channel to stop the queue!");
+            await interaction.reply("You must be in a voice channel to disconnect the bot!");
             return;
         }
 
         await interaction.deferReply();
 
         try {
-            await distube.stop(vc);
+            const queue = distube.getQueue(vc);
+            if (queue) {
+                // Stop clears the queue and leaves the VC
+                await distube.stop(vc);
+            }
+
+            await distube.voices.leave(vc);
+
             await interaction.editReply({
                 embeds: [
                     new EmbedBuilder()
                         .setColor('Blurple')
-                        .setDescription('Stopped!'),
+                        .setDescription('Stopped playback'),
                 ],
-            })
+            });
         } catch (e) {
             console.error(e);
             await interaction.editReply({

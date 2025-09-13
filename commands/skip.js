@@ -36,6 +36,17 @@ export default {
                             .setDescription('Skipped the last song and stopped playback!'),
                     ],
                 });
+
+                if (queue.leaveTimeout) clearTimeout(queue.leaveTimeout);
+
+                    // schedule leave
+                    queue.leaveTimeout = setTimeout(() => {
+                        if (!queue.songs.length) {
+                            queue.voice.leave();
+                        }
+                        queue.leaveTimeout = null;
+                    }, 3 * 60 * 1000);
+                    
                 return;
             }
 
