@@ -17,7 +17,7 @@ export default async function (queue) {
     // Schedule leave after 3 min if no new songs are added
     queue.leaveTimeout = setTimeout(async () => {
         if (!queue.songs.length && queue.voiceConnection) {
-            await distube.stop(queue);
+            await distube.voices.leave(queue);
         }
         queue.leaveTimeout = null;
     }, 3000);
