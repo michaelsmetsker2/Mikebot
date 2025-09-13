@@ -20,5 +20,5 @@ export default async function (queue) {
             queue.voice.leave();
         }
         queue.leaveTimeout = null;
-    }, 3000);
+    }, 8000);
 } ///3 * 60 * 1000
