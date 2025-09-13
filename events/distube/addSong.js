@@ -11,7 +11,7 @@ export default async (queue, song) => {
     }
 
     const embed = new EmbedBuilder()
-        .setColor('Blurple')
+        .setColor(0x63FF8F)
         .setTitle('Song Added')
         .setDescription(`New song added to the queue\n**Song:** [${song.name} (${song.formattedDuration})](${song.url})`)
         .setFooter({
