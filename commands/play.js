@@ -3,7 +3,7 @@ import { EmbedBuilder, MessageFlags } from 'discord.js';
 export const command = {
     name: 'play',
     description: 'Play a song, its a music bot,',
-        options: [{
+    options: [{
         type: 3, //string
         name: 'input',
         description: 'url or search query',
