@@ -15,7 +15,7 @@ export default {
     name: 'play',
 	inVoiceChannel: true,
     async execute (interaction, distube) {
-        const input = interaction.options.getString('input', true);
+        let input = interaction.options.getString('input', true);
         const vc = interaction.member?.voice?.channel;
         const skip = false;
         
@@ -23,6 +23,12 @@ export default {
             content: `🔍 Searching for: **${input}**`,
             flags: MessageFlags.Ephemeral
         });
+		
+		//chaos demands for the cum command
+		if (input == "cum") {
+			input = "https://www.youtube.com/shorts/pfQSp_ko8zM"
+		}
+		// thus ends the cum segment
 
         distube
         .play(vc, input, {
