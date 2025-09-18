@@ -36,7 +36,7 @@ export default async (client, distube, interaction) => {
 	
 	if (command.inVoiceChannel) {
 
-		if (!interaction.member.voice.channel) {
+		if (!interaction.member || !interaction.member.voice || !interaction.member.voice.channel) {
 			await interaction.reply("You need to be in a vc to use this");
 			return;
 		}
