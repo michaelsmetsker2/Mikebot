@@ -20,7 +20,7 @@ export default async (client, distube, message) => {
     // Listen for messages tagging the bot
     try {
         if (message.mentions.has(client.user, { ignoreEveryone: true, ignoreRoles: true })) { // Checks for exclusive mention
-            await query(message);
+            await query.execute(message);
         }
     } catch (error) {
         console.error("Error handling a mention", error);
