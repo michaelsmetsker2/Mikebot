@@ -5,20 +5,27 @@ export default async function (queue) {
         .setColor('Blurple')
         .setTitle('Queue is now empty')
         .setDescription('Queue is now empty')
-        .setFooter({
-            text: "Queue is now empty",
-        });
-        
+        .setFooter({ text: "Queue is now empty" });
+
     await queue.textChannel?.send({ embeds: [embed] });
 
-    // Clear any previous timeout just in case
+    // Clear any previous timeout
     if (queue.leaveTimeout) clearTimeout(queue.leaveTimeout);
+
+    // store references in case queue is destroyed later
+    const guild = queue.voice.channel.guild;
+    const distube = queue.distube;
 
     // schedule leave
     queue.leaveTimeout = setTimeout(() => {
-        if (!queue.songs.length) {
-            queue.voice.leave();
+        // get the current queue fresh
+        const q = distube.getQueue(guild.id);
+
+        // only leave if there is no queue or no songs are playing
+        if (!q || !q.songs.length) {
+            distube.voices.leave(guild);
         }
-        queue.leaveTimeout = null;
-    }, 3 * 60 * 1000);
+
+        if (q) q.leaveTimeout = null;
+    }, 1 * 60 * 1000);
 }
