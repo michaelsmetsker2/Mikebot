@@ -27,5 +27,5 @@ export default async function (queue) {
         }
 
         if (q) q.leaveTimeout = null;
-    }, 1 * 60 * 1000);
+    }, 3 * 60 * 1000);
 }
