@@ -1,4 +1,4 @@
-import { EmbedBuilder, MessageFlags } from 'discord,js';
+import { EmbedBuilder, MessageFlags } from 'discord.js';
 
 export const command = {
     name: 'move',
