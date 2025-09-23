@@ -30,7 +30,7 @@ export default {
         await interaction.deferReply();
 
         try {
-            await distube.seek(vc, time);
+            await distube.seek(interaction, time);
             await interaction.editReply({
                 embeds: [
                     new EmbedBuilder()
