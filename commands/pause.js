@@ -11,10 +11,6 @@ export default {
     playing: true,
     async execute(interaction, distube) {
         const vc = interaction.member?.voice?.channel;
-        if (!vc) {
-            await interaction.reply("You must be in a voice channel to use this!");
-            return;
-        }
 
         await interaction.deferReply();
 

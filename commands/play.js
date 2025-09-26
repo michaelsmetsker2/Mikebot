@@ -34,7 +34,7 @@ export default {
         .play(vc, input, {
             skip,
             undefined,
-            textChannel: interaction.channel ?? undefined,
+            textChannel: interaction.channel,
             member: interaction.member,
             metadata: { interaction },
         })
