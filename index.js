@@ -1,6 +1,7 @@
 /**
  * @fileoverview
  * Entry point and brings the bot and event listeners online
+ * 
  */
 
 import path from 'path';
