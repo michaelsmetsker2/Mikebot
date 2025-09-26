@@ -35,16 +35,19 @@ const client = new Client({
 
 // Create DisTube object
 const distube = new DisTube(client, {
-  plugins: [
+plugins: [
     new SoundCloudPlugin(),
     new SpotifyPlugin(),
     new DeezerPlugin(),
     new DirectLinkPlugin(),
     new FilePlugin(),
-    new YtDlpPlugin(),
-  ],
-  emitAddListWhenCreatingQueue: true,
-  emitAddSongWhenCreatingQueue: true,
+    new YtDlpPlugin({
+        execPath: '/usr/local/bin/yt-dlp', // force system yt-dlp
+        update: true                        // fetch latest extractor
+    }),
+    ],
+    emitAddListWhenCreatingQueue: true,
+    emitAddSongWhenCreatingQueue: true,
 });
 
 client.MessageCommands = new Collection();
