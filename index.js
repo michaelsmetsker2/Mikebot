@@ -1,7 +1,6 @@
 /**
  * @fileoverview
  * Entry point and brings the bot and event listeners online
- * 
  */
 
 import path from 'path';
@@ -34,22 +33,16 @@ const client = new Client({
 });
 
 // Create DisTube object
-
 const distube = new DisTube(client, {
-  plugins: [
-	    new SoundCloudPlugin(),
-	    new SpotifyPlugin(),
-	    new DeezerPlugin(),
-	    new DirectLinkPlugin(),
-	    new FilePlugin(),
-	    new YtDlpPlugin({
-		    execPath: '/usr/local/bin/yt-dlp', // points to system-installed yt-dlp
-		    update: true,                      // ensures latest extractor
-		    ignoreWarnings: true               // suppress JSON-breaking warnings
-	  }),
-  ],
-  emitAddListWhenCreatingQueue: true,
-  emitAddSongWhenCreatingQueue: true,
+	plugins: [
+		new SoundCloudPlugin(),
+		new SpotifyPlugin(),
+		new DeezerPlugin(),
+		new DirectLinkPlugin(),
+		new FilePlugin(),
+	],
+	emitAddListWhenCreatingQueue: true,
+	emitAddSongWhenCreatingQueue: true,
 });
 
 client.MessageCommands = new Collection();

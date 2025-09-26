@@ -33,7 +33,6 @@ export default {
         distube
         .play(vc, input, {
             skip,
-            undefined,
             textChannel: interaction.channel,
             member: interaction.member,
             metadata: { interaction },
