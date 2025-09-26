@@ -40,6 +40,7 @@ const distube = new DisTube(client, {
 		new DeezerPlugin(),
 		new DirectLinkPlugin(),
 		new FilePlugin(),
+		new YtDlpPlugin({ update: true })
 	],
 	emitAddListWhenCreatingQueue: true,
 	emitAddSongWhenCreatingQueue: true,
