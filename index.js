@@ -34,20 +34,23 @@ const client = new Client({
 });
 
 // Create DisTube object
+
 const distube = new DisTube(client, {
-plugins: [
-    new SoundCloudPlugin(),
-    new SpotifyPlugin(),
-    new DeezerPlugin(),
-    new DirectLinkPlugin(),
-    new FilePlugin(),
-    new YtDlpPlugin({
-        execPath: '/usr/local/bin/yt-dlp', // force system yt-dlp
-        update: true                        // fetch latest extractor
-    }),
-    ],
-    emitAddListWhenCreatingQueue: true,
-    emitAddSongWhenCreatingQueue: true,
+  plugins: [
+	    new SoundCloudPlugin(),
+	    new SpotifyPlugin(),
+	    new DeezerPlugin(),
+	    new DirectLinkPlugin(),
+	    new FilePlugin(),
+	    new YtDlpPlugin({
+		    execPath: '/usr/local/bin/yt-dlp', // points to system-installed yt-dlp
+		    update: true,                      // ensures latest extractor
+		    ignoreWarnings: true               // suppress JSON-breaking warnings
+	  }),
+  ],
+  emitAddListWhenCreatingQueue: true,
+  emitAddSongWhenCreatingQueue: true,
+  debug: true, // prints logs to see why streams stop
 });
 
 client.MessageCommands = new Collection();
