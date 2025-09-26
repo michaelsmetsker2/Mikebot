@@ -50,7 +50,6 @@ const distube = new DisTube(client, {
   ],
   emitAddListWhenCreatingQueue: true,
   emitAddSongWhenCreatingQueue: true,
-  debug: true, // prints logs to see why streams stop
 });
 
 client.MessageCommands = new Collection();
