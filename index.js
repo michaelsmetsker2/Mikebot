@@ -8,7 +8,6 @@ import { readdirSync, statSync } from "fs";
 import { Client, GatewayIntentBits, Partials, Collection} from 'discord.js';
 
 import { DisTube } from "distube";
-import { YouTubePlugin } from "@distube/youtube";
 //import { YtDlpPlugin } from "@distube/yt-dlp";
 import SoundCloudPlugin from "@distube/soundcloud";
 import { SpotifyPlugin } from "@distube/spotify";
@@ -36,13 +35,12 @@ const client = new Client({
 // Create DisTube object
 const distube = new DisTube(client, {
 	plugins: [
-		new YouTubePlugin(),
 		new SoundCloudPlugin(),
 		new SpotifyPlugin(),
 		new DeezerPlugin(),
 		new DirectLinkPlugin(),
 		new FilePlugin(),
-		//new YtDlpPlugin({ update: false })
+		new YtDlpPlugin({ update: false })
 	],
 	emitAddListWhenCreatingQueue: true,
 	emitAddSongWhenCreatingQueue: true,
