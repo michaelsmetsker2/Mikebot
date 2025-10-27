@@ -1,4 +1,4 @@
-// triggers when the bot connects to discord's servers
+// triggers when the bot connects to discord's servers, used here only to change the bot's status
 import * as Discord from "discord.js";
 
 export default async (client) => {
