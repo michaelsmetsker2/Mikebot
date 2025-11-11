@@ -11,17 +11,29 @@ export default {
     inVoiceChannel: true,
     playing: true,
     async execute(interaction) {
-        
-        const queue = useQueue();
+        try {
+            await interaction.deferReply();
 
-        await interaction.editReply({
-            embeds: [
-                new EmbedBuilder()
-                .setColor('Blurple')
-                .setDescription(`Skipping **${queue.currentTrack.name || queue.currentTrack.url}**`),
-            ],
-        });
+            const queue = useQueue();
+            queue.node.skip();
 
-        queue.node.skip();
-    },
+            await interaction.editReply({
+                embeds: [
+                    new EmbedBuilder()
+                    .setColor('Blurple')
+                    .setDescription(`Skipping **${queue.currentTrack.name || queue.currentTrack.url}**`),
+                ],
+            });
+
+        } catch (error) {
+            console.error(error);
+            interaction.editReply({
+                embeds: [
+                    new EmbedBuilder()
+                    .setColor(0xFF0000)
+                    .setDescription(`Error: \`${error.message}\``),
+                ],
+           });
+        }
+    }
 };

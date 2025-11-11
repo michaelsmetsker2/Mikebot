@@ -1,17 +1,18 @@
-import { EmbedBuilder, MessageFlags } from 'discord.js';
+import { EmbedBuilder, ApplicationCommandOptionType } from 'discord.js';
+import { useQueue } from 'discord-player';
 
 export const command = {
     name: 'move',
     description: 'move a song in the queue to a new position',
     options: [
         {
-            type: 4, // integer
+            type: ApplicationCommandOptionType.Number,
             name: 'from',
             description: 'position of the song to move',
             required: true
         },
         {
-            type: 4, // integer
+            type: ApplicationCommandOptionType.Number,
             name: 'to',
             description: 'new position of the song',
             required: true
@@ -22,56 +23,45 @@ export const command = {
 export default {
     name: 'move',
     inVoiceChannel: true,
-    async execute(interaction, distube) {
-        const vc = interaction.member?.voice?.channel;
-        if (!vc) {
-            await interaction.reply("You must be in a voice channel to remove a song!");
-            return;
-        }
-
-        await interaction.deferReply();
-
-        const from = interaction.options.getInteger('from', true) - 1;
-        const to = interaction.options.getInteger('to', true) - 1;
-
+    playing: true,
+    async execute(interaction) {
         try {
-            const queue = distube.getQueue(vc);
-            if (!queue || queue.songs.length === 0) {
-                await interaction.editReply("There’s nothing in the queue to move!");
-                return;
+            const queue = useQueue();
+
+            await interaction.deferReply();
+            
+            const from = interaction.options.getInteger('from', true) - 1;
+            const to = interaction.options.getInteger('to', true) - 1;
+
+            if (queue.size < 2) {
+                throw new Error("Not enough song in the queue to move");
             }
 
-            if (
-                from < 1 ||
-                from > queue.songs.length ||
-                to < 1 ||
-                to > queue.songs.length
-            ) {
-                await interaction.editReply(`Invalid positions! The queue has ${queue.songs.length} songs.`);
-                return;
+            if (from >= queue.size || from == to || to >= queue.size || to < 0 || from < 0 ) {
+                throw new Error("One or more position is invalid");
             }
+            
+            const track = queue.tracks.at(from);
+            queue.node.move(from, to);
 
-           const [song] = queue.songs.splice(from - 1, 1);
-            queue.songs.splice(to - 1, 0, song);
 
             await interaction.editReply({
                 embeds: [
                     new EmbedBuilder()
-                        .setColor('Blurple')
-                        .setDescription(`Moved **${song.name || song.url}** from position ${from} to ${to}!`),
-                ],
+                    .setColor('Blurple')
+                    .setDescription(`Moved **${track.name}** from position ${from} to ${to}`),
+                ]
             });
 
-        } catch (e) {
-            console.error(e);
-            await interaction.editReply({
+        } catch (error) {
+            console.error(error);
+            interaction.editReply({
                 embeds: [
                     new EmbedBuilder()
-                        .setColor('Blurple')
-                        .setDescription(`Error: \`${e}\``),
+                    .setColor(0xFF0000)
+                    .setDescription(`Error: \`${error.message}\``),
                 ],
             });
         }
-
     }
 }
