@@ -24,12 +24,12 @@ export default {
     async execute (interaction) {
 
         try {
+
             const player = useMainPlayer();
             let input = interaction.options.getString('input', true);
             const vc = interaction.member.voice.channel;
             
-            await interaction.deleteReply();
-            await interaction.followup({
+            await interaction.reply({
                 content: `Alright, lookin for: **${input}**`,
                 flags: MessageFlags.Ephemeral
             });
@@ -48,7 +48,7 @@ export default {
             });
         } catch(error) {
            console.error(error);
-           interaction.editReply({
+           interaction.reply({
                 embeds: [
                     new EmbedBuilder()
                     .setColor(0xFF0000)
