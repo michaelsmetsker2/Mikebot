@@ -1,5 +1,5 @@
 import { EmbedBuilder } from 'discord.js';
-import { RepeatMode } from 'distube';
+import { useQueue } from 'discord-player';
 
 export const command = {
     name: 'queue',
@@ -10,38 +10,30 @@ export default {
     name: 'queue',
     inVoiceChannel: true,
     playing: true,
-    async execute(interaction, distube) {
-        const vc = interaction.member?.voice?.channel;
-        if (!vc) {
-            await interaction.reply("You must be in a voice channel to view the queue!");
-            return;
-        }
-
-        await interaction.deferReply();
-
-        const queue = distube.getQueue(vc);
-        if (!queue) {
-            await interaction.editReply("Nothing is playing right now!");
-            return;
-        }
-
-        const currentSong = queue.songs[0];
-        const upNext = queue.songs
-            .slice(1, 10)
-            .map((song, i) => `**${i + 1}.** \`${song.name || song.url}\``)
-            .join("\n") || "None";
+    async execute(interaction) {
+        
+        const queue = useQueue();
+        
+        const upcomingTracks = queue.tracks.toArray().slice(0, 10);
+        const currentTrack = queue.currentTrack;
+        const upNext = upcomingTracks.map((track, i) => `**${i + 1}.** - \`${track.title} - ${track.duration}\``).join("\n") || "None";
 
         const embed = new EmbedBuilder()
             .setColor('Blurple')
             .setDescription(
-                `**Current:** \`${currentSong.name || currentSong.url}\` - \`${queue.formattedCurrentTime}\`/\`${currentSong.formattedDuration}\`\n\n` +
+                `**Current:** [${currentTrack.title} - TODO/${currentTrack.duration}](${currentTrack.url})\n\n` +
                 `**Up next:**\n${upNext}`
             )
             .addFields(
                 { 
                     name: "Loop", 
-                    value: `${queue.repeatMode === RepeatMode.QUEUE ? "Queue" : queue.repeatMode === RepeatMode.SONG ? "Song" : "Off"}`, 
+                    value: `${queue.repeatMode}`, 
                     inline: true 
+                },
+                {
+                    name: "Total Songs",
+                    value: "TODO",
+                    inline: true
                 }
             );
 

@@ -5,10 +5,11 @@ import 'dotenv/config';
 import { annoyFile } from '../../commands/annoy.js';
 import query from '../../commands/query.js';
 
-export default async (client, distube, message) => {
+export default async (client, message) => {
 
     if (message.system || message.author.bot) return;
 
+    // Listen for Direct Messages with attachments
     try {
         if (message.channel.type == ChannelType.DM && message.attachments.size > 0) {
             await annoyFile(message);

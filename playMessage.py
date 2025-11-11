@@ -6,7 +6,7 @@ FOLDER = "/mnt/pve/media/mikebot/temp"
 NAME = "annoy"
 EXTENSIONS = [".mp3", ".m4a", ".aac", ".ogg"]
 
-BT_DEVICE = "6D:51:EE:AE:DA:7E"
+BT_DEVICE = "6D:51:EE:AE:DA:7E" # my bluetooth speaker :)
 BT_PROFILE = "a2dp"
 
 print(f"Waiting for annoy file in {FOLDER}")

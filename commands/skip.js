@@ -1,4 +1,5 @@
 import { EmbedBuilder } from 'discord.js';
+import { useQueue } from 'discord-player';
 
 export const command = {
     name: 'skip',
@@ -9,64 +10,18 @@ export default {
     name: 'skip',
     inVoiceChannel: true,
     playing: true,
-    async execute(interaction, distube) {
-        const vc = interaction.member?.voice?.channel;
-        if (!vc) {
-            await interaction.reply("You must be in a voice channel to skip!");
-            return;
-        }
+    async execute(interaction) {
+        
+        const queue = useQueue();
 
-        await interaction.deferReply();
+        await interaction.editReply({
+            embeds: [
+                new EmbedBuilder()
+                .setColor('Blurple')
+                .setDescription(`Skipping **${queue.currentTrack.name || queue.currentTrack.url}**`),
+            ],
+        });
 
-        try {
-            const queue = distube.getQueue(vc);
-            if (!queue || queue.songs.length === 0) {
-                await interaction.editReply("There's nothing playing to skip!");
-                return;
-            }
-
-            if (queue.songs.length === 1) {
-                // Only one song left, stop the queue
-                await distube.stop(vc);
-                await interaction.editReply({
-                    embeds: [
-                        new EmbedBuilder()
-                            .setColor('Blurple')
-                            .setTitle('DisTube')
-                            .setDescription('Skipped the last song and stopped playback!'),
-                    ],
-                });
-
-                if (queue.leaveTimeout) clearTimeout(queue.leaveTimeout);
-
-                    // schedule leave
-                    queue.leaveTimeout = setTimeout(() => {
-                        if (!queue.songs.length) {
-                            queue.voice.leave();
-                        }
-                        queue.leaveTimeout = null;
-                    }, 3 * 60 * 1000);
-                    
-                return;
-            }
-
-            const song = await distube.skip(vc);
-            await interaction.editReply({
-                embeds: [
-                    new EmbedBuilder()
-                        .setColor('Blurple')
-                        .setDescription(`Skipped to: **${song.name || song.url}**`),
-                ],
-            });
-        } catch (e) {
-            console.error(e);
-            await interaction.editReply({
-                embeds: [
-                    new EmbedBuilder()
-                        .setColor('Blurple')
-                        .setDescription(`Error: \`${e}\``),
-                ],
-            });
-        }
+        queue.node.skip();
     },
 };

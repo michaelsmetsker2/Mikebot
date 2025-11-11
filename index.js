@@ -1,21 +1,22 @@
 /**
- * @fileoverview
- * Entry point and brings the bot and event listeners online
+ * Entry point, initializes all commands and event listeners, starts the bot as well.
  */
-
-import path from 'path';
-import { readdirSync, statSync } from "fs";
-import { Client, GatewayIntentBits, Partials, Collection} from 'discord.js';
-
-import { DisTube } from "distube";
-import SoundCloudPlugin from "@distube/soundcloud";
-import { SpotifyPlugin } from "@distube/spotify";
-import { DeezerPlugin } from "@distube/deezer";
-import { DirectLinkPlugin } from "@distube/direct-link";
-import { FilePlugin } from "@distube/file";
 
 import 'dotenv/config';
 
+import path from 'path';
+import { readdirSync, statSync } from "fs";
+
+import { Client, GatewayIntentBits, Partials, Collection} from 'discord.js';
+
+import { Player, GuildQueueEvent } from 'discord-player';
+
+import { DefaultExtractors } from '@discord-player/extractor'
+import { YoutubeiExtractor } from "discord-player-youtubei"
+import { SoundcloudExtractor } from "discord-player-soundcloud";
+ 
+
+// Discord bot permissions
 const client = new Client({
 	intents: [
 		GatewayIntentBits.Guilds, // lets the bot join servers
@@ -31,18 +32,12 @@ const client = new Client({
 	],
 });
 
-// Create DisTube object
-const distube = new DisTube(client, {
-	plugins: [
-		new SoundCloudPlugin(),
-		new SpotifyPlugin(),
-		new DeezerPlugin(),
-		new DirectLinkPlugin(),
-		new FilePlugin(),
-	],
-	emitAddListWhenCreatingQueue: true,
-	emitAddSongWhenCreatingQueue: true,
-});
+// Initialize discord-player
+const  player = new Player(client);
+// Load extractors
+//await player.extractors.loadMulti(DefaultExtractors);
+//await player.extractors.register(SoundcloudExtractor, {});
+await player.extractors.register(YoutubeiExtractor, {})
 
 client.MessageCommands = new Collection();
 client.SlashCommands = new Collection();
@@ -53,23 +48,21 @@ const discordEvents = readdirSync(`./events/discord`);
 for (const file of discordEvents) {
     const eventModule = await import(`./events/discord/${file}`);
     const event = eventModule.default; // <-- grab the default export
-    client.on(file.split(".")[0], event.bind(null, client, distube));
+    client.on(file.split(".")[0], event.bind(null, client));
 }
 
-// Registers Distube events
-console.log('loading distube events');
-const distubeEvents = readdirSync(`./events/distube`);
-for (const file of distubeEvents) {
-    const eventModule = await import(`./events/distube/${file}`);
+// Registers Discord-player events
+console.log('loading discord-player events');
+const playerEvents = readdirSync(`./events/discord-player`);
+for (const file of playerEvents) {
+    const eventModule = await import(`./events/discord-player/${file}`);
     const event = eventModule.default; // <-- grab default export
-    const eventName = file.split(".")[0]; // e.g., playSong.js -> "playSong"
-    distube.on(eventName, event); // <-- pass handler directly
+    const eventName = file.split(".")[0];
+    player.events.on(eventName, event); // <-- pass handler directly
 }
 
 // Registering slash commands
-
 console.log('Loading Slash Commands');
-
 const files = readdirSync(`./commands`);
 for (const file of files) {
     const fullPath = path.join('./commands', file);
@@ -81,4 +74,5 @@ for (const file of files) {
         client.SlashCommands.set(command.name, command);
     }
 }
+
 client.login(process.env.TOKEN);

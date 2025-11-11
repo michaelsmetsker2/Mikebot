@@ -1,4 +1,5 @@
 import { EmbedBuilder } from 'discord.js';
+import {useTimeline } from 'discord-player';
 
 export const command = {
     name: 'pause',
@@ -9,49 +10,23 @@ export default {
     name: 'pause',
     inVoiceChannel: true,
     playing: true,
-    async execute(interaction, distube) {
-        const vc = interaction.member?.voice?.channel;
-
-        await interaction.deferReply();
-
-        try {
-            const queue = distube.getQueue(vc);
-            if (!queue || queue.songs.length === 0) {
-                await interaction.editReply("There’s nothing playing!");
-                return;
-            }
-
-            if (queue.paused) {
-                await distube.resume(vc);
-                await interaction.editReply({
-                    embeds: [
-                        new EmbedBuilder()
-                            .setColor('Blurple')
-                            .setTitle('DisTube')
-                            .setDescription('Resumed the current song 🎵'),
-                    ],
-                });
-            } else {
-                await distube.pause(vc);
-                await interaction.editReply({
-                    embeds: [
-                        new EmbedBuilder()
-                            .setColor('Blurple')
-                            .setTitle('DisTube')
-                            .setDescription('Paused the current song ⏸️'),
-                    ],
-                });
-            }
-        } catch (e) {
-            console.error(e);
-            await interaction.editReply({
-                embeds: [
-                    new EmbedBuilder()
-                        .setColor('Blurple')
-                        .setTitle('DisTube')
-                        .setDescription(`Error: \`${e.message || e}\``),
-                ],
-            });
+    async execute(interaction) {
+        const timeline = useTimeline();
+        
+        // This is a redundancy since playing is true
+        if (!timeline) {
+            await interaction.editReply('This server does not have an active player session.');
         }
+
+        const wasPaused = timeline.paused;
+        wasPaused ? timeline.resume() : timeline.pause();
+
+        await interaction.editReply({
+            embeds: [
+                new EmbedBuilder()
+                    .setColor('Blurple')
+                    .setDescription(`The player is now ${wasPaused ? 'resumed' : 'paused'}.`),
+            ],
+        });
     },
 };

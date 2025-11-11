@@ -1,6 +1,11 @@
+/** EmptyQueue.js
+ * emits when the queue has finished
+*/
+
 import { EmbedBuilder } from "discord.js";
 
-export default async function (queue) {
+    export default async (queue, track) => {
+    const { channel } = queue.metadate;
     const embed = new EmbedBuilder()
         .setColor('Blurple')
         .setTitle('Queue is now empty')
@@ -28,4 +33,4 @@ export default async function (queue) {
 
         if (q) q.leaveTimeout = null;
     }, 3 * 60 * 1000);
-}
+};
