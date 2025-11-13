@@ -12,11 +12,13 @@ export default {
     playing: true,
     async execute(interaction) {
         try {
+            await interaction.deferReply();
             const timeline = useTimeline();
             
             // This is a redundancy since playing is true
             if (!timeline) {
                 await interaction.editReply('This server does not have an active player session.');
+                return;
             }
             
             const wasPaused = timeline.paused;

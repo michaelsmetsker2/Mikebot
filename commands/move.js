@@ -1,3 +1,5 @@
+// move a song from one nlocation in the queue to another
+
 import { EmbedBuilder, ApplicationCommandOptionType } from 'discord.js';
 import { useQueue } from 'discord-player';
 
@@ -49,7 +51,7 @@ export default {
                 embeds: [
                     new EmbedBuilder()
                     .setColor('Blurple')
-                    .setDescription(`Moved **${track.name}** from position ${from} to ${to}`),
+                    .setDescription(`Moved **${track.title}** from position ${from} to ${to}`),
                 ]
             });
 

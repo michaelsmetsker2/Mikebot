@@ -14,6 +14,7 @@ import { Player, GuildQueueEvent } from 'discord-player';
 import { DefaultExtractors } from '@discord-player/extractor'
 import { YoutubeiExtractor } from "discord-player-youtubei"
 import { SoundcloudExtractor } from "discord-player-soundcloud";
+import { YoutubeSabrExtractor } from 'discord-player-googlevideo';
  
 
 // Discord bot permissions
@@ -34,10 +35,12 @@ const client = new Client({
 
 // Initialize discord-player
 const  player = new Player(client);
+
 // Load extractors
 //await player.extractors.loadMulti(DefaultExtractors);
-//await player.extractors.register(SoundcloudExtractor, {});
-await player.extractors.register(YoutubeiExtractor, {})
+await player.extractors.register(SoundcloudExtractor, {});
+//await player.extractors.register(YoutubeiExtractor, {}) //depriciated
+//await player.extractors.register(YoutubeSabrExtractor, {});
 
 client.MessageCommands = new Collection();
 client.SlashCommands = new Collection();

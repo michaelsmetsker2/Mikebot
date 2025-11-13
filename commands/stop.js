@@ -1,4 +1,7 @@
+//stops and disconnects the bot
+
 import { EmbedBuilder } from 'discord.js';
+import { useQueue } from 'discord-player';
 
 export const command = {
     name: 'stop',
@@ -8,23 +11,14 @@ export const command = {
 export default {
     name: 'stop',
     inVoiceChannel: true,
-    async execute(interaction, distube) {
-        const vc = interaction.member?.voice?.channel;
-        if (!vc) {
-            await interaction.reply("You must be in a voice channel to disconnect the bot!");
-            return;
-        }
-
-        await interaction.deferReply();
-
+    playing: true,
+    async execute(interaction) {
         try {
-            const queue = distube.getQueue(vc);
-            if (queue) {
-                // Stop clears the queue and leaves the VC
-                await distube.stop(vc);
-            }
+            await interaction.deferReply();
 
-            await distube.voices.leave(vc);
+            const queue = useQueue();
+
+            queue.node.stop();
 
             await interaction.editReply({
                 embeds: [
@@ -33,13 +27,13 @@ export default {
                         .setDescription('Stopped playback'),
                 ],
             });
-        } catch (e) {
-            console.error(e);
+        } catch (error) {
+            console.error(error);
             await interaction.editReply({
                 embeds: [
                     new EmbedBuilder()
                         .setColor('Blurple')
-                        .setDescription(`Error: \`${e.message || e}\``),
+                        .setDescription(`Error: \`${error.message}\``),
                 ],
             });
         }

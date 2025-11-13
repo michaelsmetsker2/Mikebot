@@ -24,16 +24,13 @@ export default {
     async execute (interaction) {
 
         try {
+            
+            await interaction.deferReply({ flags: MessageFlags.Ephemeral });
 
             const player = useMainPlayer();
             let input = interaction.options.getString('input', true);
             const vc = interaction.member.voice.channel;
             
-            await interaction.reply({
-                content: `Alright, lookin for: **${input}**`,
-                flags: MessageFlags.Ephemeral
-            });
-
             // The cum feature has been added due to popular demand
             if (input == "cum") {
                 input = "https://www.youtube.com/shorts/pfQSp_ko8zM"
@@ -46,9 +43,14 @@ export default {
                 },
                 requestedBy: interaction.user,
             });
+
+            await interaction.editReply({
+                content: `Alright, found: **${input}**`,
+            });
+
         } catch(error) {
            console.error(error);
-           interaction.reply({
+           interaction.editReply({
                 embeds: [
                     new EmbedBuilder()
                     .setColor(0xFF0000)

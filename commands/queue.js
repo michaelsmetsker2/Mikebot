@@ -11,14 +11,15 @@ export default {
     inVoiceChannel: true,
     playing: true,
     async execute(interaction) {
-        
-        const queue = useQueue();
-        
-        const upcomingTracks = queue.tracks.toArray().slice(0, 10);
-        const currentTrack = queue.currentTrack;
-        const upNext = upcomingTracks.map((track, i) => `**${i + 1}.** - \`${track.title} - ${track.duration}\``).join("\n") || "None";
-
-        const embed = new EmbedBuilder()
+        try {
+            await interaction.deferReply();
+            const queue = useQueue();
+            
+            const upcomingTracks = queue.tracks.toArray().slice(0, 10);
+            const currentTrack = queue.currentTrack;
+            const upNext = upcomingTracks.map((track, i) => `**${i}.** - \`${track.title} - ${track.duration}\``).join("\n") || "None";
+            
+            const embed = new EmbedBuilder()
             .setColor('Blurple')
             .setDescription(
                 `**Current:** [${currentTrack.title} - TODO/${currentTrack.duration}](${currentTrack.url})\n\n` +
@@ -32,11 +33,22 @@ export default {
                 },
                 {
                     name: "Total Songs",
-                    value: "TODO",
+                    value: `${queue.tracks.size}`,
                     inline: true
                 }
             );
-
-        await interaction.editReply({ embeds: [embed] });
+            
+            await interaction.editReply({ embeds: [embed] });
+        
+        } catch (error) {
+            console.error(error);
+            interaction.editReply({
+                embeds: [
+                    new EmbedBuilder()
+                        .setColor(0xFF0000)
+                        .setDescription(`Error: \`${error.message}\``),
+                ],
+            });
+        }
     }
-};
+};    

@@ -1,4 +1,5 @@
 import { EmbedBuilder } from 'discord.js';
+import { useQueue } from 'discord-player';
 
 export const command = {
     name: 'seek',
@@ -18,19 +19,15 @@ export default {
     name: 'seek',
     inVoiceChannel: true,
     playing: true,
-    async execute(interaction, distube) {
-        const vc = interaction.member?.voice?.channel;
-        if (!vc) {
-            await interaction.reply("You must be in a voice channel to seek!");
-            return;
-        }
-
-        const time = interaction.options.getNumber('time', true);
-
-        await interaction.deferReply();
-
+    async execute(interaction) {
+        
         try {
-            await distube.seek(interaction, time);
+            await interaction.deferReply();
+            const queue = useQueue();
+            const time = interaction.options.getNumber('time', true);
+
+            queue.node.seek(time * 1000); 
+
             await interaction.editReply({
                 embeds: [
                     new EmbedBuilder()
@@ -38,13 +35,13 @@ export default {
                         .setDescription(`Seeked to \`${time}\` seconds`),
                 ],
             });
-        } catch (e) {
-            console.error(e);
+        } catch (error) {
+            console.error(error);
             await interaction.editReply({
                 embeds: [
                     new EmbedBuilder()
                         .setColor('Blurple')
-                        .setDescription(`Error: \`${e.message || e}\``),
+                        .setDescription(`Error: \`${error.message}\``),
                 ],
             });
         }

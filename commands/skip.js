@@ -21,7 +21,7 @@ export default {
                 embeds: [
                     new EmbedBuilder()
                     .setColor('Blurple')
-                    .setDescription(`Skipping **${queue.currentTrack.name || queue.currentTrack.url}**`),
+                    .setDescription(`Skipping [${queue.currentTrack.title}](${queue.currentTrack.url})`),
                 ],
             });
 
