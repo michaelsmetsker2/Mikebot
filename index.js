@@ -12,7 +12,7 @@ import { Client, GatewayIntentBits, Partials, Collection} from 'discord.js';
 import { Player, GuildQueueEvent } from 'discord-player';
 
 import { DefaultExtractors } from '@discord-player/extractor'
-import { YoutubeiExtractor } from "discord-player-youtubei"
+import { DeezerExtractor } from "discord-player-deezer"
 import { SoundcloudExtractor } from "discord-player-soundcloud";
 import { YoutubeSabrExtractor } from 'discord-player-googlevideo';
  
@@ -37,10 +37,11 @@ const client = new Client({
 const  player = new Player(client);
 
 // Load extractors
-//await player.extractors.loadMulti(DefaultExtractors);
+await player.extractors.register(YoutubeSabrExtractor, {});
 await player.extractors.register(SoundcloudExtractor, {});
-//await player.extractors.register(YoutubeiExtractor, {}) //depriciated
-//await player.extractors.register(YoutubeSabrExtractor, {});
+await player.extractors.register(DeezerExtractor, {})
+
+await player.extractors.loadMulti(DefaultExtractors);
 
 client.MessageCommands = new Collection();
 client.SlashCommands = new Collection();
