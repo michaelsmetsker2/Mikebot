@@ -38,8 +38,8 @@ const  player = new Player(client);
 
 // Load extractors
 await player.extractors.register(YoutubeSabrExtractor, {});
-await player.extractors.register(SoundcloudExtractor, {});
 await player.extractors.register(DeezerExtractor, {})
+await player.extractors.register(SoundcloudExtractor, {});
 
 await player.extractors.loadMulti(DefaultExtractors);
 
