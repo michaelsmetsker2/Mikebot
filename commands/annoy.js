@@ -43,7 +43,7 @@ export default {
 
 		if (message.length > CHARACTER_LIMIT) { // Invalid message
 			console.log(sender, '\'s message was to long');
-			await interaction.editReply('fuck you i\'m not listening to all of that, (over ', CHARACTER_LIMIT, ' characters)');
+			await interaction.editReply(`fuck you i'm not listening to all of that (over ${CHARACTER_LIMIT} characters)`);
 			return;
 		} else { // Valid message
 

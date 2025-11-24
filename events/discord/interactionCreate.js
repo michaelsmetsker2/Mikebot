@@ -24,7 +24,7 @@ const processQueue = async (client) => {
 		}
 		catch (error) {
 			console.error('error processing command ', interaction.commandName, " error: ", error.message);
-			await interaction.editReply('An error occurred while processing your command. error: ', error.message);
+			await interaction.editReply(`An error occurred while processing your command. error: ${error.message}`);
 		}
 	}
 	activeQueue = false;
