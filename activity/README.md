@@ -1,3 +1,3 @@
 Discord activity for upcoming soundboard shenanigans
 
-client is build with vite and hosted via ngynx on my personal website
+client contains the source files and is built with vite and hosted via ngynx on my personal website
