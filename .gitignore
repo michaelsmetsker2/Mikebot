@@ -4,3 +4,6 @@ node_modules
 # these .pth files to large to be stored in git
 model.pth
 dvae.pth
+
+# vite bulds for discord activity
+dist/
