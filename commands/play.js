@@ -32,11 +32,11 @@ export default {
             const vc = interaction.member.voice.channel;
             
             // The cum feature has been added due to popular demand
-            if (input.toLowercase() == "cum") {
+            if (input == "cum") {
                 input = "https://www.youtube.com/shorts/pfQSp_ko8zM"
             }
 			// The popeye feature has been added due to popular demand
-            if (input.toLowercase() == "popeye") {
+            if (input == "popeye") {
                 input = "https://youtu.be/1SnawmK2Lzs?si=s_n5N-9itKhpkTAA"
             }
             

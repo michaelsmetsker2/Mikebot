@@ -80,11 +80,10 @@ async function appendVoiceChannelName() {
 }
 
 
+
 setupDiscordSdk().then(() => {
   console.log("Discord SDK is authenticated");
 
-  // We can now make API calls within the scopes we requested in setupDiscordSDK()
-  // Note: the access_token returned is a sensitive secret and should be treated as such
   appendVoiceChannelName();
 });
 
