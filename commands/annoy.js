@@ -13,7 +13,7 @@ const CHARACTER_LIMIT = 250; // Max characters for the message
 
 const TEMP_DIR = process.env.TEMP_DIR
 
-const SUPPORTED_EXTENSIONS = ['.wav', '.mp3', '.m4a', '.aac', '.ogg', '.flac'];
+const SUPPORTED_EXTENSIONS = ['.wav', '.mp3', '.m4a', '.aac', '.flac'];
 
 
 // Text file that will be read by an external TTS system on the client machine
